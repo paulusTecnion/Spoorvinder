@@ -14,670 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
-<style>
-/* required styles */
-
-.leaflet-pane,
-.leaflet-tile,
-.leaflet-marker-icon,
-.leaflet-marker-shadow,
-.leaflet-tile-container,
-.leaflet-pane > svg,
-.leaflet-pane > canvas,
-.leaflet-zoom-box,
-.leaflet-image-layer,
-.leaflet-layer {
-	position: absolute;
-	left: 0;
-	top: 0;
-	}
-.leaflet-container {
-	overflow: hidden;
-	}
-.leaflet-tile,
-.leaflet-marker-icon,
-.leaflet-marker-shadow {
-	-webkit-user-select: none;
-	   -moz-user-select: none;
-	        user-select: none;
-	  -webkit-user-drag: none;
-	}
-/* Prevents IE11 from highlighting tiles in blue */
-.leaflet-tile::selection {
-	background: transparent;
-}
-/* Safari renders non-retina tile on retina better with this, but Chrome is worse */
-.leaflet-safari .leaflet-tile {
-	image-rendering: -webkit-optimize-contrast;
-	}
-/* hack that prevents hw layers "stretching" when loading new tiles */
-.leaflet-safari .leaflet-tile-container {
-	width: 1600px;
-	height: 1600px;
-	-webkit-transform-origin: 0 0;
-	}
-.leaflet-marker-icon,
-.leaflet-marker-shadow {
-	display: block;
-	}
-/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */
-/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
-.leaflet-container .leaflet-overlay-pane svg {
-	max-width: none !important;
-	max-height: none !important;
-	}
-.leaflet-container .leaflet-marker-pane img,
-.leaflet-container .leaflet-shadow-pane img,
-.leaflet-container .leaflet-tile-pane img,
-.leaflet-container img.leaflet-image-layer,
-.leaflet-container .leaflet-tile {
-	max-width: none !important;
-	max-height: none !important;
-	width: auto;
-	padding: 0;
-	}
-
-.leaflet-container img.leaflet-tile {
-	/* See: https://bugs.chromium.org/p/chromium/issues/detail?id=600120 */
-	mix-blend-mode: plus-lighter;
-}
-
-.leaflet-container.leaflet-touch-zoom {
-	-ms-touch-action: pan-x pan-y;
-	touch-action: pan-x pan-y;
-	}
-.leaflet-container.leaflet-touch-drag {
-	-ms-touch-action: pinch-zoom;
-	/* Fallback for FF which doesn't support pinch-zoom */
-	touch-action: none;
-	touch-action: pinch-zoom;
-}
-.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
-	-ms-touch-action: none;
-	touch-action: none;
-}
-.leaflet-container {
-	-webkit-tap-highlight-color: transparent;
-}
-.leaflet-container a {
-	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
-}
-.leaflet-tile {
-	filter: inherit;
-	visibility: hidden;
-	}
-.leaflet-tile-loaded {
-	visibility: inherit;
-	}
-.leaflet-zoom-box {
-	width: 0;
-	height: 0;
-	-moz-box-sizing: border-box;
-	     box-sizing: border-box;
-	z-index: 800;
-	}
-/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
-.leaflet-overlay-pane svg {
-	-moz-user-select: none;
-	}
-
-.leaflet-pane         { z-index: 400; }
-
-.leaflet-tile-pane    { z-index: 200; }
-.leaflet-overlay-pane { z-index: 400; }
-.leaflet-shadow-pane  { z-index: 500; }
-.leaflet-marker-pane  { z-index: 600; }
-.leaflet-tooltip-pane   { z-index: 650; }
-.leaflet-popup-pane   { z-index: 700; }
-
-.leaflet-map-pane canvas { z-index: 100; }
-.leaflet-map-pane svg    { z-index: 200; }
-
-.leaflet-vml-shape {
-	width: 1px;
-	height: 1px;
-	}
-.lvml {
-	behavior: url(#default#VML);
-	display: inline-block;
-	position: absolute;
-	}
-
-
-/* control positioning */
-
-.leaflet-control {
-	position: relative;
-	z-index: 800;
-	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
-	pointer-events: auto;
-	}
-.leaflet-top,
-.leaflet-bottom {
-	position: absolute;
-	z-index: 1000;
-	pointer-events: none;
-	}
-.leaflet-top {
-	top: 0;
-	}
-.leaflet-right {
-	right: 0;
-	}
-.leaflet-bottom {
-	bottom: 0;
-	}
-.leaflet-left {
-	left: 0;
-	}
-.leaflet-control {
-	float: left;
-	clear: both;
-	}
-.leaflet-right .leaflet-control {
-	float: right;
-	}
-.leaflet-top .leaflet-control {
-	margin-top: 10px;
-	}
-.leaflet-bottom .leaflet-control {
-	margin-bottom: 10px;
-	}
-.leaflet-left .leaflet-control {
-	margin-left: 10px;
-	}
-.leaflet-right .leaflet-control {
-	margin-right: 10px;
-	}
-
-
-/* zoom and fade animations */
-
-.leaflet-fade-anim .leaflet-popup {
-	opacity: 0;
-	-webkit-transition: opacity 0.2s linear;
-	   -moz-transition: opacity 0.2s linear;
-	        transition: opacity 0.2s linear;
-	}
-.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
-	opacity: 1;
-	}
-.leaflet-zoom-animated {
-	-webkit-transform-origin: 0 0;
-	    -ms-transform-origin: 0 0;
-	        transform-origin: 0 0;
-	}
-svg.leaflet-zoom-animated {
-	will-change: transform;
-}
-
-.leaflet-zoom-anim .leaflet-zoom-animated {
-	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
-	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
-	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
-	}
-.leaflet-zoom-anim .leaflet-tile,
-.leaflet-pan-anim .leaflet-tile {
-	-webkit-transition: none;
-	   -moz-transition: none;
-	        transition: none;
-	}
-
-.leaflet-zoom-anim .leaflet-zoom-hide {
-	visibility: hidden;
-	}
-
-
-/* cursors */
-
-.leaflet-interactive {
-	cursor: pointer;
-	}
-.leaflet-grab {
-	cursor: -webkit-grab;
-	cursor:    -moz-grab;
-	cursor:         grab;
-	}
-.leaflet-crosshair,
-.leaflet-crosshair .leaflet-interactive {
-	cursor: crosshair;
-	}
-.leaflet-popup-pane,
-.leaflet-control {
-	cursor: auto;
-	}
-.leaflet-dragging .leaflet-grab,
-.leaflet-dragging .leaflet-grab .leaflet-interactive,
-.leaflet-dragging .leaflet-marker-draggable {
-	cursor: move;
-	cursor: -webkit-grabbing;
-	cursor:    -moz-grabbing;
-	cursor:         grabbing;
-	}
-
-/* marker & overlays interactivity */
-.leaflet-marker-icon,
-.leaflet-marker-shadow,
-.leaflet-image-layer,
-.leaflet-pane > svg path,
-.leaflet-tile-container {
-	pointer-events: none;
-	}
-
-.leaflet-marker-icon.leaflet-interactive,
-.leaflet-image-layer.leaflet-interactive,
-.leaflet-pane > svg path.leaflet-interactive,
-svg.leaflet-image-layer.leaflet-interactive path {
-	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
-	pointer-events: auto;
-	}
-
-/* visual tweaks */
-
-.leaflet-container {
-	background: #ddd;
-	outline-offset: 1px;
-	}
-.leaflet-container a {
-	color: #0078A8;
-	}
-.leaflet-zoom-box {
-	border: 2px dotted #38f;
-	background: rgba(255,255,255,0.5);
-	}
-
-
-/* general typography */
-.leaflet-container {
-	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
-	font-size: 12px;
-	font-size: 0.75rem;
-	line-height: 1.5;
-	}
-
-
-/* general toolbar styles */
-
-.leaflet-bar {
-	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
-	border-radius: 4px;
-	}
-.leaflet-bar a {
-	background-color: #fff;
-	border-bottom: 1px solid #ccc;
-	width: 26px;
-	height: 26px;
-	line-height: 26px;
-	display: block;
-	text-align: center;
-	text-decoration: none;
-	color: black;
-	}
-.leaflet-bar a,
-.leaflet-control-layers-toggle {
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	display: block;
-	}
-.leaflet-bar a:hover,
-.leaflet-bar a:focus {
-	background-color: #f4f4f4;
-	}
-.leaflet-bar a:first-child {
-	border-top-left-radius: 4px;
-	border-top-right-radius: 4px;
-	}
-.leaflet-bar a:last-child {
-	border-bottom-left-radius: 4px;
-	border-bottom-right-radius: 4px;
-	border-bottom: none;
-	}
-.leaflet-bar a.leaflet-disabled {
-	cursor: default;
-	background-color: #f4f4f4;
-	color: #bbb;
-	}
-
-.leaflet-touch .leaflet-bar a {
-	width: 30px;
-	height: 30px;
-	line-height: 30px;
-	}
-.leaflet-touch .leaflet-bar a:first-child {
-	border-top-left-radius: 2px;
-	border-top-right-radius: 2px;
-	}
-.leaflet-touch .leaflet-bar a:last-child {
-	border-bottom-left-radius: 2px;
-	border-bottom-right-radius: 2px;
-	}
-
-/* zoom control */
-
-.leaflet-control-zoom-in,
-.leaflet-control-zoom-out {
-	font: bold 18px 'Lucida Console', Monaco, monospace;
-	text-indent: 1px;
-	}
-
-.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
-	font-size: 22px;
-	}
-
-
-/* layers control */
-
-.leaflet-control-layers {
-	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-	background: #fff;
-	border-radius: 5px;
-	}
-.leaflet-control-layers-toggle {
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAQAAAADQ4RFAAACf0lEQVR4AY1UM3gkARTePdvdoTxXKc+qTl3aU5U6b2Kbkz3Gtq3Zw6ziLGNPzrYx7946Tr6/ee/XeCQ4D3ykPtL5tHno4n0d/h3+xfuWHGLX81cn7r0iTNzjr7LrlxCqPtkbTQEHeqOrTy4Yyt3VCi/IOB0v7rVC7q45Q3Gr5K6jt+3Gl5nCoDD4MtO+j96Wu8atmhGqcNGHObuf8OM/x3AMx38+4Z2sPqzCxRFK2aF2e5Jol56XTLyggAMTL56XOMoS1W4pOyjUcGGQdZxU6qRh7B9Zp+PfpOFlqt0zyDZckPi1ttmIp03jX8gyJ8a/PG2yutpS/Vol7peZIbZcKBAEEheEIAgFbDkz5H6Zrkm2hVWGiXKiF4Ycw0RWKdtC16Q7qe3X4iOMxruonzegJzWaXFrU9utOSsLUmrc0YjeWYjCW4PDMADElpJSSQ0vQvA1Tm6/JlKnqFs1EGyZiFCqnRZTEJJJiKRYzVYzJck2Rm6P4iH+cmSY0YzimYa8l0EtTODFWhcMIMVqdsI2uiTvKmTisIDHJ3od5GILVhBCarCfVRmo4uTjkhrhzkiBV7SsaqS+TzrzM1qpGGUFt28pIySQHR6h7F6KSwGWm97ay+Z+ZqMcEjEWebE7wxCSQwpkhJqoZA5ivCdZDjJepuJ9IQjGGUmuXJdBFUygxVqVsxFsLMbDe8ZbDYVCGKxs+W080max1hFCarCfV+C1KATwcnvE9gRRuMP2prdbWGowm1KB1y+zwMMENkM755cJ2yPDtqhTI6ED1M/82yIDtC/4j4BijjeObflpO9I9MwXTCsSX8jWAFeHr05WoLTJ5G8IQVS/7vwR6ohirYM7f6HzYpogfS3R2OAAAAAElFTkSuQmCC);
-	width: 36px;
-	height: 36px;
-	}
-.leaflet-retina .leaflet-control-layers-toggle {
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAQAAABvcdNgAAAEsklEQVR4AWL4TydIhpZK1kpWOlg0w3ZXP6D2soBtG42jeI6ZmQTHzAxiTbSJsYLjO9HhP+WOmcuhciVnmHVQcJnp7DFvScowZorad/+V/fVzMdMT2g9Cv9guXGv/7pYOrXh2U+RRR3dSd9JRx6bIFc/ekqHI29JC6pJ5ZEh1yWkhkbcFeSjxgx3L2m1cb1C7bceyxA+CNjT/Ifff+/kDk2u/w/33/IeCMOSaWZ4glosqT3DNnNZQ7Cs58/3Ce5HL78iZH/vKVIaYlqzfdLu8Vi7dnvUbEza5Idt36tquZFldl6N5Z/POLof0XLK61mZCmJSWjVF9tEjUluu74IUXvgttuVIHE7YxSkaYhJZam7yiM9Pv82JYfl9nptxZaxMJE4YSPty+vF0+Y2up9d3wwijfjZbabqm/3bZ9ecKHsiGmRflnn1MW4pjHf9oLufyn2z3y1D6n8g8TZhxyzipLNPnAUpsOiuWimg52psrTZYnOWYNDTMuWBWa0tJb4rgq1UvmutpaYEbZlwU3CLJm/ayYjHW5/h7xWLn9Hh1vepDkyf7dE7MtT5LR4e7yYpHrkhOUpEfssBLq2pPhAqoSWKUkk7EDqkmK6RrCEzqDjhNDWNE+XSMvkJRDWlZTmCW0l0PHQGRZY5t1L83kT0Y3l2SItk5JAWHl2dCOBm+fPu3fo5/3v61RMCO9Jx2EEYYhb0rmNQMX/vm7gqOEJLcXTGw3CAuRNeyaPWwjR8PRqKQ1PDA/dpv+on9Shox52WFnx0KY8onHayrJzm87i5h9xGw/tfkev0jGsQizqezUKjk12hBMKJ4kbCqGPVNXudyyrShovGw5CgxsRICxF6aRmSjlBnHRzg7Gx8fKqEubI2rahQYdR1YgDIRQO7JvQyD52hoIQx0mxa0ODtW2Iozn1le2iIRdzwWewedyZzewidueOGqlsn1MvcnQpuVwLGG3/IR1hIKxCjelIDZ8ldqWz25jWAsnldEnK0Zxro19TGVb2ffIZEsIO89EIEDvKMPrzmBOQcKQ+rroye6NgRRxqR4U8EAkz0CL6uSGOm6KQCdWjvjRiSP1BPalCRS5iQYiEIvxuBMJEWgzSoHADcVMuN7IuqqTeyUPq22qFimFtxDyBBJEwNyt6TM88blFHao/6tWWhuuOM4SAK4EI4QmFHA+SEyWlp4EQoJ13cYGzMu7yszEIBOm2rVmHUNqwAIQabISNMRstmdhNWcFLsSm+0tjJH1MdRxO5Nx0WDMhCtgD6OKgZeljJqJKc9po8juskR9XN0Y1lZ3mWjLR9JCO1jRDMd0fpYC2VnvjBSEFg7wBENc0R9HFlb0xvF1+TBEpF68d+DHR6IOWVv2BECtxo46hOFUBd/APU57WIoEwJhIi2CdpyZX0m93BZicktMj1AS9dClteUFAUNUIEygRZCtik5zSxI9MubTBH1GOiHsiLJ3OCoSZkILa9PxiN0EbvhsAo8tdAf9Seepd36lGWHmtNANTv5Jd0z4QYyeo/UEJqxKRpg5LZx6btLPsOaEmdMyxYdlc8LMaJnikDlhclqmPiQnTEpLUIZEwkRagjYkEibQErwhkTAKCLQEbUgkzJQWc/0PstHHcfEdQ+UAAAAASUVORK5CYII=);
-	background-size: 26px 26px;
-	}
-.leaflet-touch .leaflet-control-layers-toggle {
-	width: 44px;
-	height: 44px;
-	}
-.leaflet-control-layers .leaflet-control-layers-list,
-.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
-	display: none;
-	}
-.leaflet-control-layers-expanded .leaflet-control-layers-list {
-	display: block;
-	position: relative;
-	}
-.leaflet-control-layers-expanded {
-	padding: 6px 10px 6px 6px;
-	color: #333;
-	background: #fff;
-	}
-.leaflet-control-layers-scrollbar {
-	overflow-y: scroll;
-	overflow-x: hidden;
-	padding-right: 5px;
-	}
-.leaflet-control-layers-selector {
-	margin-top: 2px;
-	position: relative;
-	top: 1px;
-	}
-.leaflet-control-layers label {
-	display: block;
-	font-size: 13px;
-	font-size: 1.08333em;
-	}
-.leaflet-control-layers-separator {
-	height: 0;
-	border-top: 1px solid #ddd;
-	margin: 5px -10px 5px -6px;
-	}
-
-/* Default icon URLs */
-.leaflet-default-icon-path { /* used only in path-guessing heuristic, see L.Icon.Default */
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAApCAYAAADAk4LOAAAFgUlEQVR4Aa1XA5BjWRTN2oW17d3YaZtr2962HUzbDNpjszW24mRt28p47v7zq/bXZtrp/lWnXr337j3nPCe85NcypgSFdugCpW5YoDAMRaIMqRi6aKq5E3YqDQO3qAwjVWrD8Ncq/RBpykd8oZUb/kaJutow8r1aP9II0WmLKLIsJyv1w/kqw9Ch2MYdB++12Onxee/QMwvf4/Dk/Lfp/i4nxTXtOoQ4pW5Aj7wpici1A9erdAN2OH64x8OSP9j3Ft3b7aWkTg/Fm91siTra0f9on5sQr9INejH6CUUUpavjFNq1B+Oadhxmnfa8RfEmN8VNAsQhPqF55xHkMzz3jSmChWU6f7/XZKNH+9+hBLOHYozuKQPxyMPUKkrX/K0uWnfFaJGS1QPRtZsOPtr3NsW0uyh6NNCOkU3Yz+bXbT3I8G3xE5EXLXtCXbbqwCO9zPQYPRTZ5vIDXD7U+w7rFDEoUUf7ibHIR4y6bLVPXrz8JVZEql13trxwue/uDivd3fkWRbS6/IA2bID4uk0UpF1N8qLlbBlXs4Ee7HLTfV1j54APvODnSfOWBqtKVvjgLKzF5YdEk5ewRkGlK0i33Eofffc7HT56jD7/6U+qH3Cx7SBLNntH5YIPvODnyfIXZYRVDPqgHtLs5ABHD3YzLuespb7t79FY34DjMwrVrcTuwlT55YMPvOBnRrJ4VXTdNnYug5ucHLBjEpt30701A3Ts+HEa73u6dT3FNWwflY86eMHPk+Yu+i6pzUpRrW7SNDg5JHR4KapmM5Wv2E8Tfcb1HoqqHMHU+uWDD7zg54mz5/2BSnizi9T1Dg4QQXLToGNCkb6tb1NU+QAlGr1++eADrzhn/u8Q2YZhQVlZ5+CAOtqfbhmaUCS1ezNFVm2imDbPmPng5wmz+gwh+oHDce0eUtQ6OGDIyR0uUhUsoO3vfDmmgOezH0mZN59x7MBi++WDL1g/eEiU3avlidO671bkLfwbw5XV2P8Pzo0ydy4t2/0eu33xYSOMOD8hTf4CrBtGMSoXfPLchX+J0ruSePw3LZeK0juPJbYzrhkH0io7B3k164hiGvawhOKMLkrQLyVpZg8rHFW7E2uHOL888IBPlNZ1FPzstSJM694fWr6RwpvcJK60+0HCILTBzZLFNdtAzJaohze60T8qBzyh5ZuOg5e7uwQppofEmf2++DYvmySqGBuKaicF1blQjhuHdvCIMvp8whTTfZzI7RldpwtSzL+F1+wkdZ2TBOW2gIF88PBTzD/gpeREAMEbxnJcaJHNHrpzji0gQCS6hdkEeYt9DF/2qPcEC8RM28Hwmr3sdNyht00byAut2k3gufWNtgtOEOFGUwcXWNDbdNbpgBGxEvKkOQsxivJx33iow0Vw5S6SVTrpVq11ysA2Rp7gTfPfktc6zhtXBBC+adRLshf6sG2RfHPZ5EAc4sVZ83yCN00Fk/4kggu40ZTvIEm5g24qtU4KjBrx/BTTH8ifVASAG7gKrnWxJDcU7x8X6Ecczhm3o6YicvsLXWfh3Ch1W0k8x0nXF+0fFxgt4phz8QvypiwCCFKMqXCnqXExjq10beH+UUA7+nG6mdG/Pu0f3LgFcGrl2s0kNNjpmoJ9o4B29CMO8dMT4Q5ox8uitF6fqsrJOr8qnwNbRzv6hSnG5wP+64C7h9lp30hKNtKdWjtdkbuPA19nJ7Tz3zR/ibgARbhb4AlhavcBebmTHcFl2fvYEnW0ox9xMxKBS8btJ+KiEbq9zA4RthQXDhPa0T9TEe69gWupwc6uBUphquXgf+/FrIjweHQS4/pduMe5ERUMHUd9xv8ZR98CxkS4F2n3EUrUZ10EYNw7BWm9x1GiPssi3GgiGRDKWRYZfXlON+dfNbM+GgIwYdwAAAAASUVORK5CYII=);
-	}
-
-
-/* attribution and scale controls */
-
-.leaflet-container .leaflet-control-attribution {
-	background: #fff;
-	background: rgba(255, 255, 255, 0.8);
-	margin: 0;
-	}
-.leaflet-control-attribution,
-.leaflet-control-scale-line {
-	padding: 0 5px;
-	color: #333;
-	line-height: 1.4;
-	}
-.leaflet-control-attribution a {
-	text-decoration: none;
-	}
-.leaflet-control-attribution a:hover,
-.leaflet-control-attribution a:focus {
-	text-decoration: underline;
-	}
-.leaflet-attribution-flag {
-	display: inline !important;
-	vertical-align: baseline !important;
-	width: 1em;
-	height: 0.6669em;
-	}
-.leaflet-left .leaflet-control-scale {
-	margin-left: 5px;
-	}
-.leaflet-bottom .leaflet-control-scale {
-	margin-bottom: 5px;
-	}
-.leaflet-control-scale-line {
-	border: 2px solid #777;
-	border-top: none;
-	line-height: 1.1;
-	padding: 2px 5px 1px;
-	white-space: nowrap;
-	-moz-box-sizing: border-box;
-	     box-sizing: border-box;
-	background: rgba(255, 255, 255, 0.8);
-	text-shadow: 1px 1px #fff;
-	}
-.leaflet-control-scale-line:not(:first-child) {
-	border-top: 2px solid #777;
-	border-bottom: none;
-	margin-top: -2px;
-	}
-.leaflet-control-scale-line:not(:first-child):not(:last-child) {
-	border-bottom: 2px solid #777;
-	}
-
-.leaflet-touch .leaflet-control-attribution,
-.leaflet-touch .leaflet-control-layers,
-.leaflet-touch .leaflet-bar {
-	box-shadow: none;
-	}
-.leaflet-touch .leaflet-control-layers,
-.leaflet-touch .leaflet-bar {
-	border: 2px solid rgba(0,0,0,0.2);
-	background-clip: padding-box;
-	}
-
-
-/* popup */
-
-.leaflet-popup {
-	position: absolute;
-	text-align: center;
-	margin-bottom: 20px;
-	}
-.leaflet-popup-content-wrapper {
-	padding: 1px;
-	text-align: left;
-	border-radius: 12px;
-	}
-.leaflet-popup-content {
-	margin: 13px 24px 13px 20px;
-	line-height: 1.3;
-	font-size: 13px;
-	font-size: 1.08333em;
-	min-height: 1px;
-	}
-.leaflet-popup-content p {
-	margin: 17px 0;
-	margin: 1.3em 0;
-	}
-.leaflet-popup-tip-container {
-	width: 40px;
-	height: 20px;
-	position: absolute;
-	left: 50%;
-	margin-top: -1px;
-	margin-left: -20px;
-	overflow: hidden;
-	pointer-events: none;
-	}
-.leaflet-popup-tip {
-	width: 17px;
-	height: 17px;
-	padding: 1px;
-
-	margin: -10px auto 0;
-	pointer-events: auto;
-
-	-webkit-transform: rotate(45deg);
-	   -moz-transform: rotate(45deg);
-	    -ms-transform: rotate(45deg);
-	        transform: rotate(45deg);
-	}
-.leaflet-popup-content-wrapper,
-.leaflet-popup-tip {
-	background: white;
-	color: #333;
-	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
-	}
-.leaflet-container a.leaflet-popup-close-button {
-	position: absolute;
-	top: 0;
-	right: 0;
-	border: none;
-	text-align: center;
-	width: 24px;
-	height: 24px;
-	font: 16px/24px Tahoma, Verdana, sans-serif;
-	color: #757575;
-	text-decoration: none;
-	background: transparent;
-	}
-.leaflet-container a.leaflet-popup-close-button:hover,
-.leaflet-container a.leaflet-popup-close-button:focus {
-	color: #585858;
-	}
-.leaflet-popup-scrolled {
-	overflow: auto;
-	}
-
-.leaflet-oldie .leaflet-popup-content-wrapper {
-	-ms-zoom: 1;
-	}
-.leaflet-oldie .leaflet-popup-tip {
-	width: 24px;
-	margin: 0 auto;
-
-	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
-	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
-	}
-
-.leaflet-oldie .leaflet-control-zoom,
-.leaflet-oldie .leaflet-control-layers,
-.leaflet-oldie .leaflet-popup-content-wrapper,
-.leaflet-oldie .leaflet-popup-tip {
-	border: 1px solid #999;
-	}
-
-
-/* div icon */
-
-.leaflet-div-icon {
-	background: #fff;
-	border: 1px solid #666;
-	}
-
-
-/* Tooltip */
-/* Base styles for the element that has a tooltip */
-.leaflet-tooltip {
-	position: absolute;
-	padding: 6px;
-	background-color: #fff;
-	border: 1px solid #fff;
-	border-radius: 3px;
-	color: #222;
-	white-space: nowrap;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	pointer-events: none;
-	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-	}
-.leaflet-tooltip.leaflet-interactive {
-	cursor: pointer;
-	pointer-events: auto;
-	}
-.leaflet-tooltip-top:before,
-.leaflet-tooltip-bottom:before,
-.leaflet-tooltip-left:before,
-.leaflet-tooltip-right:before {
-	position: absolute;
-	pointer-events: none;
-	border: 6px solid transparent;
-	background: transparent;
-	content: "";
-	}
-
-/* Directions */
-
-.leaflet-tooltip-bottom {
-	margin-top: 6px;
-}
-.leaflet-tooltip-top {
-	margin-top: -6px;
-}
-.leaflet-tooltip-bottom:before,
-.leaflet-tooltip-top:before {
-	left: 50%;
-	margin-left: -6px;
-	}
-.leaflet-tooltip-top:before {
-	bottom: 0;
-	margin-bottom: -12px;
-	border-top-color: #fff;
-	}
-.leaflet-tooltip-bottom:before {
-	top: 0;
-	margin-top: -12px;
-	margin-left: -6px;
-	border-bottom-color: #fff;
-	}
-.leaflet-tooltip-left {
-	margin-left: -6px;
-}
-.leaflet-tooltip-right {
-	margin-left: 6px;
-}
-.leaflet-tooltip-left:before,
-.leaflet-tooltip-right:before {
-	top: 50%;
-	margin-top: -6px;
-	}
-.leaflet-tooltip-left:before {
-	right: 0;
-	margin-right: -12px;
-	border-left-color: #fff;
-	}
-.leaflet-tooltip-right:before {
-	left: 0;
-	margin-left: -12px;
-	border-right-color: #fff;
-	}
-
-/* Printing */
-
-@media print {
-	/* Prevent printers from removing background-images of controls. */
-	.leaflet-control {
-		-webkit-print-color-adjust: exact;
-		print-color-adjust: exact;
-		}
-	}
-
-</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <style>
 :root{
@@ -713,7 +50,30 @@ body{background:var(--bg);color:var(--ink);font:16px/1.4 "Barlow",system-ui,-app
   border-radius:20px 20px 0 0;box-shadow:var(--shadow);
   padding:10px 16px calc(14px + env(safe-area-inset-bottom,0px));max-height:62vh;overflow-y:auto;
   max-width:640px;margin:0 auto}
-.grip{width:38px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 10px}
+.sheet{padding-top:0;transition:max-height .25s ease}
+.handle{display:block;width:100%;background:none;border:0;color:inherit;font:inherit;text-align:left;padding:8px 0 10px;cursor:pointer;touch-action:none}
+.grip{display:block;width:38px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 8px}
+.hrow{display:flex;align-items:center;gap:10px}
+.htext{flex:1;min-width:0}
+.htitle{display:block;font:700 20px/1.15 "Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hsub{display:block;font-size:14px;color:var(--muted)}
+.hbtn{flex:none;display:flex;align-items:center;gap:4px;font-size:14px;font-weight:600;color:var(--pine);border:1.5px solid var(--line);border-radius:999px;padding:6px 10px}
+.hbtn svg{width:16px;height:16px;transition:transform .2s}
+.sheet.collapsed .hbtn svg{transform:rotate(180deg)}
+.sheet.collapsed #sheetBody{display:none}
+ol.steps{list-style:none;margin:4px 0 0;padding:0}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;padding:12px 0;border-top:1px solid var(--line)}
+.num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 16px/1 "Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;border:2px solid var(--pine);color:var(--pine)}
+.step.done .num{background:var(--pine);color:var(--pine-ink)}
+.step h2{font:600 17px/1.25 "Barlow",system-ui,sans-serif;margin:3px 0 6px}
+.step p{margin:0 0 10px;color:var(--muted);font-size:15px}
+.step .stats{margin:2px 0 10px}
+.mini{display:flex;gap:8px;flex-wrap:wrap}
+.btn.small{min-height:40px;font-size:15px;padding:7px 12px}
+details.opts{margin-top:10px;font-size:15px}
+details.opts summary{color:var(--route);cursor:pointer;padding:6px 0;min-height:32px}
+details.opts .row{margin:8px 0 0}
+@media (prefers-reduced-motion:reduce){.sheet,.hbtn svg{transition:none}}
 .title{font:700 24px/1.15 "Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;margin:0 0 4px;overflow-wrap:anywhere}
 .lead{color:var(--muted);margin:0 0 14px}
 .stats{display:flex;flex-wrap:wrap;gap:6px 24px;margin:6px 0 14px}
@@ -732,6 +92,7 @@ select{flex:1;min-width:150px}
   border:1.5px solid var(--line);background:transparent;color:var(--ink)}
 .btn.primary{background:var(--pine);border-color:var(--pine);color:var(--pine-ink)}
 .btn.wide{grid-column:1/-1}
+.btn.full{width:100%}
 .btn:disabled{opacity:.5}
 .btn:focus-visible,.fab:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--ochre);outline-offset:2px}
 .linkbtn{background:none;border:0;color:var(--route);font:inherit;font-size:15px;padding:6px 0;cursor:pointer;text-decoration:underline}
@@ -769,51 +130,77 @@ ul.lib .del{background:none;border:0;color:var(--danger);font:inherit;font-size:
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
 </button>
 
-<section class="sheet" id="sheet" aria-live="polite">
-  <div class="grip"></div>
+<section class="sheet" id="sheet">
+  <button class="handle" id="handle" aria-expanded="true" aria-controls="sheetBody">
+    <span class="grip"></span>
+    <span class="hrow">
+      <span class="htext"><span class="htitle" id="hTitle">Nog geen track</span><span class="hsub" id="hSub">Open een GPX om te beginnen</span></span>
+      <span class="hbtn"><span id="hBtnTxt">Verberg</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span>
+    </span>
+  </button>
 
-  <div id="emptyView">
-    <h1 class="title">Open een GPX om te beginnen</h1>
-    <p class="lead">Kies een track uit Bestanden, of zoek er een op mtbroutes.nl. Geopende tracks blijven bewaard op je iPhone.</p>
-    <div class="actions">
-      <button class="btn primary wide" data-act="open">GPX openen</button>
-      <button class="btn" data-act="lib">Mijn tracks</button>
-      <button class="btn" data-act="find">Zoek routes</button>
-    </div>
-  </div>
-
-  <div id="trackView" hidden>
-    <h1 class="title" id="tName"></h1>
-    <div class="stats">
-      <div class="stat"><b id="tDist">–</b><span>km track</span></div>
-      <div class="stat" id="tUpWrap"><b id="tUp">–</b><span>hoogtemeters</span></div>
-    </div>
-
-    <div class="plan" id="planView" hidden>
-      <div class="stats">
-        <div class="stat sm"><b id="pTo">–</b><span>km naar start</span></div>
-        <div class="stat sm" id="pBackWrap"><b id="pBack">–</b><span>km terug</span></div>
-        <div class="stat sm"><b id="pTot">–</b><span>km totaal</span></div>
+  <div id="sheetBody" aria-live="polite">
+    <div id="emptyView">
+      <p class="lead">Kies een GPX uit Bestanden, of zoek een route op mtbroutes.nl. Geopende tracks blijven bewaard op je iPhone.</p>
+      <div class="actions">
+        <button class="btn primary wide" data-act="open">GPX openen</button>
+        <button class="btn" data-act="lib">Mijn tracks</button>
+        <button class="btn" data-act="find">Zoek routes</button>
       </div>
-      <button class="linkbtn" data-act="clearplan">Aanloop weghalen</button>
     </div>
 
-    <div class="row">
-      <label class="chk"><input type="checkbox" id="optBack" checked> Ook terug naar m’n startplek</label>
-    </div>
-    <div class="row">
-      <select id="optProfile" aria-label="Soort aanloop">
-        <option value="trekking">Aanloop via rustige wegen en fietspaden</option>
-        <option value="fastbike">Aanloop zo snel mogelijk (asfalt)</option>
-        <option value="shortest">Aanloop zo kort mogelijk</option>
-      </select>
-    </div>
-    <div class="actions">
-      <button class="btn primary wide" data-act="plan" id="planBtn">Route vanaf hier naar de start</button>
-      <button class="btn primary wide" data-act="share" id="shareBtn">Deel GPX</button>
-      <button class="btn" data-act="open">GPX openen</button>
-      <button class="btn" data-act="lib">Mijn tracks</button>
-    </div>
+    <ol class="steps" id="trackView" hidden>
+      <li class="step done">
+        <div class="num" aria-hidden="true">1</div>
+        <div>
+          <h2>Track geopend</h2>
+          <div class="mini">
+            <button class="btn small" data-act="open">Andere GPX</button>
+            <button class="btn small" data-act="lib">Mijn tracks</button>
+          </div>
+        </div>
+      </li>
+      <li class="step" id="step2">
+        <div class="num" aria-hidden="true">2</div>
+        <div>
+          <h2>Aanloop vanaf je plek</h2>
+          <div id="planEmpty">
+            <p>Optioneel: de fietsroute van waar je nu bent naar de start.</p>
+            <button class="btn primary full" data-act="plan" id="planBtn">Bereken aanloop</button>
+          </div>
+          <div id="planView" hidden>
+            <div class="stats">
+              <div class="stat sm"><b id="pTo">–</b><span>km heen</span></div>
+              <div class="stat sm" id="pBackWrap"><b id="pBack">–</b><span>km terug</span></div>
+              <div class="stat sm"><b id="pTot">–</b><span>km totaal</span></div>
+            </div>
+            <div class="mini">
+              <button class="btn small" data-act="plan" id="replanBtn">Opnieuw berekenen</button>
+              <button class="btn small" data-act="clearplan">Weghalen</button>
+            </div>
+          </div>
+          <details class="opts">
+            <summary>Opties voor de aanloop</summary>
+            <div class="row"><label class="chk"><input type="checkbox" id="optBack" checked> Ook terug naar m’n startplek</label></div>
+            <div class="row">
+              <select id="optProfile" aria-label="Soort aanloop">
+                <option value="trekking">Rustige wegen en fietspaden</option>
+                <option value="fastbike">Zo snel mogelijk (asfalt)</option>
+                <option value="shortest">Zo kort mogelijk</option>
+              </select>
+            </div>
+          </details>
+        </div>
+      </li>
+      <li class="step">
+        <div class="num" aria-hidden="true">3</div>
+        <div>
+          <h2>Naar je GPS</h2>
+          <p id="shareHint">Kies iGPSport in het deelmenu, of “Bewaar in Bestanden”.</p>
+          <button class="btn primary full" data-act="share" id="shareBtn">Deel GPX</button>
+        </div>
+      </li>
+    </ol>
   </div>
 </section>
 
@@ -936,14 +323,26 @@ function showTrack(t){
   const end=ll[ll.length-1];
   if(hav(ll[0],end)>60)L.circleMarker(end,{radius:7,color:'#fff',weight:3,fillColor:css('--danger'),fillOpacity:1}).addTo(lyr).bindTooltip('Finish');
   const s=stats(t.points);
-  $('#tName').textContent=t.name;$('#tDist').textContent=km(s.d);
-  $('#tUpWrap').hidden=!s.hasE;$('#tUp').textContent=nf0.format(s.up);
+  setHeader();
   $('#emptyView').hidden=true;$('#trackView').hidden=false;
-  requestAnimationFrame(()=>{placeFab();fit(ll)});
+  setSheet(true);requestAnimationFrame(()=>{placeFab();fit(ll)});
+}
+function setHeader(){
+  const t=state.track;
+  if(!t){$('#hTitle').textContent='Nog geen track';$('#hSub').textContent='Open een GPX om te beginnen';return}
+  $('#hTitle').textContent=t.name;
+  const st=stats(t.points),d=st.d,hm=st.hasE?', '+nf0.format(st.up)+' hoogtemeters':'';
+  if(state.to){const tot=d+stats(state.to).d+(state.back?stats(state.back).d:0);$('#hSub').textContent=km(d)+' km track'+hm+', '+km(tot)+' km totaal'}
+  else $('#hSub').textContent=km(d)+' km'+hm;
+}
+function setSheet(open){
+  const sh=$('#sheet');sh.classList.toggle('collapsed',!open);
+  $('#handle').setAttribute('aria-expanded',String(open));$('#hBtnTxt').textContent=open?'Verberg':'Toon';
+  requestAnimationFrame(placeFab);
 }
 function clearPlan(silent){
-  state.to=state.back=null;planLyr.clearLayers();$('#planView').hidden=true;
-  $('#shareBtn').textContent='Deel GPX';$('#planBtn').textContent='Route vanaf hier naar de start';
+  state.to=state.back=null;planLyr.clearLayers();$('#planView').hidden=true;$('#planEmpty').hidden=false;$('#step2').classList.remove('done');
+  $('#shareBtn').textContent='Deel GPX';setHeader();
   if(!silent)requestAnimationFrame(placeFab);
 }
 function showPlan(){
@@ -952,7 +351,7 @@ function showPlan(){
   if(state.back)L.polyline(state.back.map(p=>[p[0],p[1]]),{color:rc,weight:4,opacity:.6,dashArray:'1 8',lineCap:'round'}).addTo(planLyr);
   const dTo=state.to?stats(state.to).d:0,dBack=state.back?stats(state.back).d:0,dT=stats(state.track.points).d;
   $('#pTo').textContent=km(dTo);$('#pBackWrap').hidden=!state.back;$('#pBack').textContent=km(dBack);$('#pTot').textContent=km(dTo+dT+dBack);
-  $('#planView').hidden=false;$('#shareBtn').textContent='Deel route met aanloop';$('#planBtn').textContent='Aanloop opnieuw berekenen';
+  $('#planView').hidden=false;$('#planEmpty').hidden=true;$('#step2').classList.add('done');$('#shareBtn').textContent='Deel GPX met aanloop';setHeader();
   requestAnimationFrame(()=>{placeFab();fit(join(state.to,state.track.points,state.back).map(p=>[p[0],p[1]]))});
 }
 
@@ -992,11 +391,9 @@ async function share(){
       return;
     }
   }
-  try{
-    const dl=window.claude&&await window.claude.use('downloads');
-    if(!dl){toast('Delen en downloaden zijn hier niet beschikbaar.',true);return}
-    await dl.save({filename:fn,data:xml});
-  }catch(e){if(e&&e.code!=='declined')toast('Downloaden lukte niet.',true)}
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([xml],{type:'application/gpx+xml'}));a.download=fn;document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},2000);
+  toast('Delen wordt hier niet ondersteund, het bestand is gedownload.');
 }
 async function renderLib(){
   const ul=$('#libList');ul.textContent='';
@@ -1053,6 +450,15 @@ $('#fileIn').addEventListener('change',e=>{const f=e.target.files&&e.target.file
 $('#libDlg').addEventListener('click',e=>{if(e.target===e.currentTarget)e.currentTarget.close()});
 $('#locBtn').addEventListener('click',async()=>{try{const h=await locate();map.setView(h,Math.max(map.getZoom(),14))}catch(e){toast(e.message,true)}});
 window.addEventListener('resize',placeFab);
+/* paneel in- en uitklappen: tikken, vegen, of op de kaart tikken */
+(function(){const h=$('#handle');let y0=null,moved=false;
+  h.addEventListener('touchstart',e=>{y0=e.touches[0].clientY;moved=false},{passive:true});
+  h.addEventListener('touchmove',e=>{if(y0!=null&&Math.abs(e.touches[0].clientY-y0)>12)moved=true},{passive:true});
+  h.addEventListener('touchend',e=>{if(y0==null)return;const dy=e.changedTouches[0].clientY-y0;y0=null;
+    if(moved){e.preventDefault();if(dy>30)setSheet(false);else if(dy<-30)setSheet(true)}});
+  h.addEventListener('click',()=>setSheet($('#sheet').classList.contains('collapsed')));
+  map.on('click',()=>{if(state.track)setSheet(false)});
+})();
 
 /* ---------- start ---------- */
 placeFab();
