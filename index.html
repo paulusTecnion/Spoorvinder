@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Spoorvinder">
+<meta name="theme-color" content="#24493A">
+<title>Spoorvinder</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
+<link rel="icon" href="data:image/png;base64,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">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap">
+<style>
+/* required styles */
+
+.leaflet-pane,
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-tile-container,
+.leaflet-pane > svg,
+.leaflet-pane > canvas,
+.leaflet-zoom-box,
+.leaflet-image-layer,
+.leaflet-layer {
+	position: absolute;
+	left: 0;
+	top: 0;
+	}
+.leaflet-container {
+	overflow: hidden;
+	}
+.leaflet-tile,
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	-webkit-user-select: none;
+	   -moz-user-select: none;
+	        user-select: none;
+	  -webkit-user-drag: none;
+	}
+/* Prevents IE11 from highlighting tiles in blue */
+.leaflet-tile::selection {
+	background: transparent;
+}
+/* Safari renders non-retina tile on retina better with this, but Chrome is worse */
+.leaflet-safari .leaflet-tile {
+	image-rendering: -webkit-optimize-contrast;
+	}
+/* hack that prevents hw layers "stretching" when loading new tiles */
+.leaflet-safari .leaflet-tile-container {
+	width: 1600px;
+	height: 1600px;
+	-webkit-transform-origin: 0 0;
+	}
+.leaflet-marker-icon,
+.leaflet-marker-shadow {
+	display: block;
+	}
+/* .leaflet-container svg: reset svg max-width decleration shipped in Joomla! (joomla.org) 3.x */
+/* .leaflet-container img: map is broken in FF if you have max-width: 100% on tiles */
+.leaflet-container .leaflet-overlay-pane svg {
+	max-width: none !important;
+	max-height: none !important;
+	}
+.leaflet-container .leaflet-marker-pane img,
+.leaflet-container .leaflet-shadow-pane img,
+.leaflet-container .leaflet-tile-pane img,
+.leaflet-container img.leaflet-image-layer,
+.leaflet-container .leaflet-tile {
+	max-width: none !important;
+	max-height: none !important;
+	width: auto;
+	padding: 0;
+	}
+
+.leaflet-container img.leaflet-tile {
+	/* See: https://bugs.chromium.org/p/chromium/issues/detail?id=600120 */
+	mix-blend-mode: plus-lighter;
+}
+
+.leaflet-container.leaflet-touch-zoom {
+	-ms-touch-action: pan-x pan-y;
+	touch-action: pan-x pan-y;
+	}
+.leaflet-container.leaflet-touch-drag {
+	-ms-touch-action: pinch-zoom;
+	/* Fallback for FF which doesn't support pinch-zoom */
+	touch-action: none;
+	touch-action: pinch-zoom;
+}
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+	-ms-touch-action: none;
+	touch-action: none;
+}
+.leaflet-container {
+	-webkit-tap-highlight-color: transparent;
+}
+.leaflet-container a {
+	-webkit-tap-highlight-color: rgba(51, 181, 229, 0.4);
+}
+.leaflet-tile {
+	filter: inherit;
+	visibility: hidden;
+	}
+.leaflet-tile-loaded {
+	visibility: inherit;
+	}
+.leaflet-zoom-box {
+	width: 0;
+	height: 0;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	z-index: 800;
+	}
+/* workaround for https://bugzilla.mozilla.org/show_bug.cgi?id=888319 */
+.leaflet-overlay-pane svg {
+	-moz-user-select: none;
+	}
+
+.leaflet-pane         { z-index: 400; }
+
+.leaflet-tile-pane    { z-index: 200; }
+.leaflet-overlay-pane { z-index: 400; }
+.leaflet-shadow-pane  { z-index: 500; }
+.leaflet-marker-pane  { z-index: 600; }
+.leaflet-tooltip-pane   { z-index: 650; }
+.leaflet-popup-pane   { z-index: 700; }
+
+.leaflet-map-pane canvas { z-index: 100; }
+.leaflet-map-pane svg    { z-index: 200; }
+
+.leaflet-vml-shape {
+	width: 1px;
+	height: 1px;
+	}
+.lvml {
+	behavior: url(#default#VML);
+	display: inline-block;
+	position: absolute;
+	}
+
+
+/* control positioning */
+
+.leaflet-control {
+	position: relative;
+	z-index: 800;
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+.leaflet-top,
+.leaflet-bottom {
+	position: absolute;
+	z-index: 1000;
+	pointer-events: none;
+	}
+.leaflet-top {
+	top: 0;
+	}
+.leaflet-right {
+	right: 0;
+	}
+.leaflet-bottom {
+	bottom: 0;
+	}
+.leaflet-left {
+	left: 0;
+	}
+.leaflet-control {
+	float: left;
+	clear: both;
+	}
+.leaflet-right .leaflet-control {
+	float: right;
+	}
+.leaflet-top .leaflet-control {
+	margin-top: 10px;
+	}
+.leaflet-bottom .leaflet-control {
+	margin-bottom: 10px;
+	}
+.leaflet-left .leaflet-control {
+	margin-left: 10px;
+	}
+.leaflet-right .leaflet-control {
+	margin-right: 10px;
+	}
+
+
+/* zoom and fade animations */
+
+.leaflet-fade-anim .leaflet-popup {
+	opacity: 0;
+	-webkit-transition: opacity 0.2s linear;
+	   -moz-transition: opacity 0.2s linear;
+	        transition: opacity 0.2s linear;
+	}
+.leaflet-fade-anim .leaflet-map-pane .leaflet-popup {
+	opacity: 1;
+	}
+.leaflet-zoom-animated {
+	-webkit-transform-origin: 0 0;
+	    -ms-transform-origin: 0 0;
+	        transform-origin: 0 0;
+	}
+svg.leaflet-zoom-animated {
+	will-change: transform;
+}
+
+.leaflet-zoom-anim .leaflet-zoom-animated {
+	-webkit-transition: -webkit-transform 0.25s cubic-bezier(0,0,0.25,1);
+	   -moz-transition:    -moz-transform 0.25s cubic-bezier(0,0,0.25,1);
+	        transition:         transform 0.25s cubic-bezier(0,0,0.25,1);
+	}
+.leaflet-zoom-anim .leaflet-tile,
+.leaflet-pan-anim .leaflet-tile {
+	-webkit-transition: none;
+	   -moz-transition: none;
+	        transition: none;
+	}
+
+.leaflet-zoom-anim .leaflet-zoom-hide {
+	visibility: hidden;
+	}
+
+
+/* cursors */
+
+.leaflet-interactive {
+	cursor: pointer;
+	}
+.leaflet-grab {
+	cursor: -webkit-grab;
+	cursor:    -moz-grab;
+	cursor:         grab;
+	}
+.leaflet-crosshair,
+.leaflet-crosshair .leaflet-interactive {
+	cursor: crosshair;
+	}
+.leaflet-popup-pane,
+.leaflet-control {
+	cursor: auto;
+	}
+.leaflet-dragging .leaflet-grab,
+.leaflet-dragging .leaflet-grab .leaflet-interactive,
+.leaflet-dragging .leaflet-marker-draggable {
+	cursor: move;
+	cursor: -webkit-grabbing;
+	cursor:    -moz-grabbing;
+	cursor:         grabbing;
+	}
+
+/* marker & overlays interactivity */
+.leaflet-marker-icon,
+.leaflet-marker-shadow,
+.leaflet-image-layer,
+.leaflet-pane > svg path,
+.leaflet-tile-container {
+	pointer-events: none;
+	}
+
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	pointer-events: visiblePainted; /* IE 9-10 doesn't have auto */
+	pointer-events: auto;
+	}
+
+/* visual tweaks */
+
+.leaflet-container {
+	background: #ddd;
+	outline-offset: 1px;
+	}
+.leaflet-container a {
+	color: #0078A8;
+	}
+.leaflet-zoom-box {
+	border: 2px dotted #38f;
+	background: rgba(255,255,255,0.5);
+	}
+
+
+/* general typography */
+.leaflet-container {
+	font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-size: 0.75rem;
+	line-height: 1.5;
+	}
+
+
+/* general toolbar styles */
+
+.leaflet-bar {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
+	border-radius: 4px;
+	}
+.leaflet-bar a {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	width: 26px;
+	height: 26px;
+	line-height: 26px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: black;
+	}
+.leaflet-bar a,
+.leaflet-control-layers-toggle {
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	}
+.leaflet-bar a:hover,
+.leaflet-bar a:focus {
+	background-color: #f4f4f4;
+	}
+.leaflet-bar a:first-child {
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	}
+.leaflet-bar a:last-child {
+	border-bottom-left-radius: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom: none;
+	}
+.leaflet-bar a.leaflet-disabled {
+	cursor: default;
+	background-color: #f4f4f4;
+	color: #bbb;
+	}
+
+.leaflet-touch .leaflet-bar a {
+	width: 30px;
+	height: 30px;
+	line-height: 30px;
+	}
+.leaflet-touch .leaflet-bar a:first-child {
+	border-top-left-radius: 2px;
+	border-top-right-radius: 2px;
+	}
+.leaflet-touch .leaflet-bar a:last-child {
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
+	}
+
+/* zoom control */
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
+	font: bold 18px 'Lucida Console', Monaco, monospace;
+	text-indent: 1px;
+	}
+
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out  {
+	font-size: 22px;
+	}
+
+
+/* layers control */
+
+.leaflet-control-layers {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+	background: #fff;
+	border-radius: 5px;
+	}
+.leaflet-control-layers-toggle {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABoAAAAaCAQAAAADQ4RFAAACf0lEQVR4AY1UM3gkARTePdvdoTxXKc+qTl3aU5U6b2Kbkz3Gtq3Zw6ziLGNPzrYx7946Tr6/ee/XeCQ4D3ykPtL5tHno4n0d/h3+xfuWHGLX81cn7r0iTNzjr7LrlxCqPtkbTQEHeqOrTy4Yyt3VCi/IOB0v7rVC7q45Q3Gr5K6jt+3Gl5nCoDD4MtO+j96Wu8atmhGqcNGHObuf8OM/x3AMx38+4Z2sPqzCxRFK2aF2e5Jol56XTLyggAMTL56XOMoS1W4pOyjUcGGQdZxU6qRh7B9Zp+PfpOFlqt0zyDZckPi1ttmIp03jX8gyJ8a/PG2yutpS/Vol7peZIbZcKBAEEheEIAgFbDkz5H6Zrkm2hVWGiXKiF4Ycw0RWKdtC16Q7qe3X4iOMxruonzegJzWaXFrU9utOSsLUmrc0YjeWYjCW4PDMADElpJSSQ0vQvA1Tm6/JlKnqFs1EGyZiFCqnRZTEJJJiKRYzVYzJck2Rm6P4iH+cmSY0YzimYa8l0EtTODFWhcMIMVqdsI2uiTvKmTisIDHJ3od5GILVhBCarCfVRmo4uTjkhrhzkiBV7SsaqS+TzrzM1qpGGUFt28pIySQHR6h7F6KSwGWm97ay+Z+ZqMcEjEWebE7wxCSQwpkhJqoZA5ivCdZDjJepuJ9IQjGGUmuXJdBFUygxVqVsxFsLMbDe8ZbDYVCGKxs+W080max1hFCarCfV+C1KATwcnvE9gRRuMP2prdbWGowm1KB1y+zwMMENkM755cJ2yPDtqhTI6ED1M/82yIDtC/4j4BijjeObflpO9I9MwXTCsSX8jWAFeHr05WoLTJ5G8IQVS/7vwR6ohirYM7f6HzYpogfS3R2OAAAAAElFTkSuQmCC);
+	width: 36px;
+	height: 36px;
+	}
+.leaflet-retina .leaflet-control-layers-toggle {
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAQAAABvcdNgAAAEsklEQVR4AWL4TydIhpZK1kpWOlg0w3ZXP6D2soBtG42jeI6ZmQTHzAxiTbSJsYLjO9HhP+WOmcuhciVnmHVQcJnp7DFvScowZorad/+V/fVzMdMT2g9Cv9guXGv/7pYOrXh2U+RRR3dSd9JRx6bIFc/ekqHI29JC6pJ5ZEh1yWkhkbcFeSjxgx3L2m1cb1C7bceyxA+CNjT/Ifff+/kDk2u/w/33/IeCMOSaWZ4glosqT3DNnNZQ7Cs58/3Ce5HL78iZH/vKVIaYlqzfdLu8Vi7dnvUbEza5Idt36tquZFldl6N5Z/POLof0XLK61mZCmJSWjVF9tEjUluu74IUXvgttuVIHE7YxSkaYhJZam7yiM9Pv82JYfl9nptxZaxMJE4YSPty+vF0+Y2up9d3wwijfjZbabqm/3bZ9ecKHsiGmRflnn1MW4pjHf9oLufyn2z3y1D6n8g8TZhxyzipLNPnAUpsOiuWimg52psrTZYnOWYNDTMuWBWa0tJb4rgq1UvmutpaYEbZlwU3CLJm/ayYjHW5/h7xWLn9Hh1vepDkyf7dE7MtT5LR4e7yYpHrkhOUpEfssBLq2pPhAqoSWKUkk7EDqkmK6RrCEzqDjhNDWNE+XSMvkJRDWlZTmCW0l0PHQGRZY5t1L83kT0Y3l2SItk5JAWHl2dCOBm+fPu3fo5/3v61RMCO9Jx2EEYYhb0rmNQMX/vm7gqOEJLcXTGw3CAuRNeyaPWwjR8PRqKQ1PDA/dpv+on9Shox52WFnx0KY8onHayrJzm87i5h9xGw/tfkev0jGsQizqezUKjk12hBMKJ4kbCqGPVNXudyyrShovGw5CgxsRICxF6aRmSjlBnHRzg7Gx8fKqEubI2rahQYdR1YgDIRQO7JvQyD52hoIQx0mxa0ODtW2Iozn1le2iIRdzwWewedyZzewidueOGqlsn1MvcnQpuVwLGG3/IR1hIKxCjelIDZ8ldqWz25jWAsnldEnK0Zxro19TGVb2ffIZEsIO89EIEDvKMPrzmBOQcKQ+rroye6NgRRxqR4U8EAkz0CL6uSGOm6KQCdWjvjRiSP1BPalCRS5iQYiEIvxuBMJEWgzSoHADcVMuN7IuqqTeyUPq22qFimFtxDyBBJEwNyt6TM88blFHao/6tWWhuuOM4SAK4EI4QmFHA+SEyWlp4EQoJ13cYGzMu7yszEIBOm2rVmHUNqwAIQabISNMRstmdhNWcFLsSm+0tjJH1MdRxO5Nx0WDMhCtgD6OKgZeljJqJKc9po8juskR9XN0Y1lZ3mWjLR9JCO1jRDMd0fpYC2VnvjBSEFg7wBENc0R9HFlb0xvF1+TBEpF68d+DHR6IOWVv2BECtxo46hOFUBd/APU57WIoEwJhIi2CdpyZX0m93BZicktMj1AS9dClteUFAUNUIEygRZCtik5zSxI9MubTBH1GOiHsiLJ3OCoSZkILa9PxiN0EbvhsAo8tdAf9Seepd36lGWHmtNANTv5Jd0z4QYyeo/UEJqxKRpg5LZx6btLPsOaEmdMyxYdlc8LMaJnikDlhclqmPiQnTEpLUIZEwkRagjYkEibQErwhkTAKCLQEbUgkzJQWc/0PstHHcfEdQ+UAAAAASUVORK5CYII=);
+	background-size: 26px 26px;
+	}
+.leaflet-touch .leaflet-control-layers-toggle {
+	width: 44px;
+	height: 44px;
+	}
+.leaflet-control-layers .leaflet-control-layers-list,
+.leaflet-control-layers-expanded .leaflet-control-layers-toggle {
+	display: none;
+	}
+.leaflet-control-layers-expanded .leaflet-control-layers-list {
+	display: block;
+	position: relative;
+	}
+.leaflet-control-layers-expanded {
+	padding: 6px 10px 6px 6px;
+	color: #333;
+	background: #fff;
+	}
+.leaflet-control-layers-scrollbar {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	padding-right: 5px;
+	}
+.leaflet-control-layers-selector {
+	margin-top: 2px;
+	position: relative;
+	top: 1px;
+	}
+.leaflet-control-layers label {
+	display: block;
+	font-size: 13px;
+	font-size: 1.08333em;
+	}
+.leaflet-control-layers-separator {
+	height: 0;
+	border-top: 1px solid #ddd;
+	margin: 5px -10px 5px -6px;
+	}
+
+/* Default icon URLs */
+.leaflet-default-icon-path { /* used only in path-guessing heuristic, see L.Icon.Default */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABkAAAApCAYAAADAk4LOAAAFgUlEQVR4Aa1XA5BjWRTN2oW17d3YaZtr2962HUzbDNpjszW24mRt28p47v7zq/bXZtrp/lWnXr337j3nPCe85NcypgSFdugCpW5YoDAMRaIMqRi6aKq5E3YqDQO3qAwjVWrD8Ncq/RBpykd8oZUb/kaJutow8r1aP9II0WmLKLIsJyv1w/kqw9Ch2MYdB++12Onxee/QMwvf4/Dk/Lfp/i4nxTXtOoQ4pW5Aj7wpici1A9erdAN2OH64x8OSP9j3Ft3b7aWkTg/Fm91siTra0f9on5sQr9INejH6CUUUpavjFNq1B+Oadhxmnfa8RfEmN8VNAsQhPqF55xHkMzz3jSmChWU6f7/XZKNH+9+hBLOHYozuKQPxyMPUKkrX/K0uWnfFaJGS1QPRtZsOPtr3NsW0uyh6NNCOkU3Yz+bXbT3I8G3xE5EXLXtCXbbqwCO9zPQYPRTZ5vIDXD7U+w7rFDEoUUf7ibHIR4y6bLVPXrz8JVZEql13trxwue/uDivd3fkWRbS6/IA2bID4uk0UpF1N8qLlbBlXs4Ee7HLTfV1j54APvODnSfOWBqtKVvjgLKzF5YdEk5ewRkGlK0i33Eofffc7HT56jD7/6U+qH3Cx7SBLNntH5YIPvODnyfIXZYRVDPqgHtLs5ABHD3YzLuespb7t79FY34DjMwrVrcTuwlT55YMPvOBnRrJ4VXTdNnYug5ucHLBjEpt30701A3Ts+HEa73u6dT3FNWwflY86eMHPk+Yu+i6pzUpRrW7SNDg5JHR4KapmM5Wv2E8Tfcb1HoqqHMHU+uWDD7zg54mz5/2BSnizi9T1Dg4QQXLToGNCkb6tb1NU+QAlGr1++eADrzhn/u8Q2YZhQVlZ5+CAOtqfbhmaUCS1ezNFVm2imDbPmPng5wmz+gwh+oHDce0eUtQ6OGDIyR0uUhUsoO3vfDmmgOezH0mZN59x7MBi++WDL1g/eEiU3avlidO671bkLfwbw5XV2P8Pzo0ydy4t2/0eu33xYSOMOD8hTf4CrBtGMSoXfPLchX+J0ruSePw3LZeK0juPJbYzrhkH0io7B3k164hiGvawhOKMLkrQLyVpZg8rHFW7E2uHOL888IBPlNZ1FPzstSJM694fWr6RwpvcJK60+0HCILTBzZLFNdtAzJaohze60T8qBzyh5ZuOg5e7uwQppofEmf2++DYvmySqGBuKaicF1blQjhuHdvCIMvp8whTTfZzI7RldpwtSzL+F1+wkdZ2TBOW2gIF88PBTzD/gpeREAMEbxnJcaJHNHrpzji0gQCS6hdkEeYt9DF/2qPcEC8RM28Hwmr3sdNyht00byAut2k3gufWNtgtOEOFGUwcXWNDbdNbpgBGxEvKkOQsxivJx33iow0Vw5S6SVTrpVq11ysA2Rp7gTfPfktc6zhtXBBC+adRLshf6sG2RfHPZ5EAc4sVZ83yCN00Fk/4kggu40ZTvIEm5g24qtU4KjBrx/BTTH8ifVASAG7gKrnWxJDcU7x8X6Ecczhm3o6YicvsLXWfh3Ch1W0k8x0nXF+0fFxgt4phz8QvypiwCCFKMqXCnqXExjq10beH+UUA7+nG6mdG/Pu0f3LgFcGrl2s0kNNjpmoJ9o4B29CMO8dMT4Q5ox8uitF6fqsrJOr8qnwNbRzv6hSnG5wP+64C7h9lp30hKNtKdWjtdkbuPA19nJ7Tz3zR/ibgARbhb4AlhavcBebmTHcFl2fvYEnW0ox9xMxKBS8btJ+KiEbq9zA4RthQXDhPa0T9TEe69gWupwc6uBUphquXgf+/FrIjweHQS4/pduMe5ERUMHUd9xv8ZR98CxkS4F2n3EUrUZ10EYNw7BWm9x1GiPssi3GgiGRDKWRYZfXlON+dfNbM+GgIwYdwAAAAASUVORK5CYII=);
+	}
+
+
+/* attribution and scale controls */
+
+.leaflet-container .leaflet-control-attribution {
+	background: #fff;
+	background: rgba(255, 255, 255, 0.8);
+	margin: 0;
+	}
+.leaflet-control-attribution,
+.leaflet-control-scale-line {
+	padding: 0 5px;
+	color: #333;
+	line-height: 1.4;
+	}
+.leaflet-control-attribution a {
+	text-decoration: none;
+	}
+.leaflet-control-attribution a:hover,
+.leaflet-control-attribution a:focus {
+	text-decoration: underline;
+	}
+.leaflet-attribution-flag {
+	display: inline !important;
+	vertical-align: baseline !important;
+	width: 1em;
+	height: 0.6669em;
+	}
+.leaflet-left .leaflet-control-scale {
+	margin-left: 5px;
+	}
+.leaflet-bottom .leaflet-control-scale {
+	margin-bottom: 5px;
+	}
+.leaflet-control-scale-line {
+	border: 2px solid #777;
+	border-top: none;
+	line-height: 1.1;
+	padding: 2px 5px 1px;
+	white-space: nowrap;
+	-moz-box-sizing: border-box;
+	     box-sizing: border-box;
+	background: rgba(255, 255, 255, 0.8);
+	text-shadow: 1px 1px #fff;
+	}
+.leaflet-control-scale-line:not(:first-child) {
+	border-top: 2px solid #777;
+	border-bottom: none;
+	margin-top: -2px;
+	}
+.leaflet-control-scale-line:not(:first-child):not(:last-child) {
+	border-bottom: 2px solid #777;
+	}
+
+.leaflet-touch .leaflet-control-attribution,
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	box-shadow: none;
+	}
+.leaflet-touch .leaflet-control-layers,
+.leaflet-touch .leaflet-bar {
+	border: 2px solid rgba(0,0,0,0.2);
+	background-clip: padding-box;
+	}
+
+
+/* popup */
+
+.leaflet-popup {
+	position: absolute;
+	text-align: center;
+	margin-bottom: 20px;
+	}
+.leaflet-popup-content-wrapper {
+	padding: 1px;
+	text-align: left;
+	border-radius: 12px;
+	}
+.leaflet-popup-content {
+	margin: 13px 24px 13px 20px;
+	line-height: 1.3;
+	font-size: 13px;
+	font-size: 1.08333em;
+	min-height: 1px;
+	}
+.leaflet-popup-content p {
+	margin: 17px 0;
+	margin: 1.3em 0;
+	}
+.leaflet-popup-tip-container {
+	width: 40px;
+	height: 20px;
+	position: absolute;
+	left: 50%;
+	margin-top: -1px;
+	margin-left: -20px;
+	overflow: hidden;
+	pointer-events: none;
+	}
+.leaflet-popup-tip {
+	width: 17px;
+	height: 17px;
+	padding: 1px;
+
+	margin: -10px auto 0;
+	pointer-events: auto;
+
+	-webkit-transform: rotate(45deg);
+	   -moz-transform: rotate(45deg);
+	    -ms-transform: rotate(45deg);
+	        transform: rotate(45deg);
+	}
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+	background: white;
+	color: #333;
+	box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+	}
+.leaflet-container a.leaflet-popup-close-button {
+	position: absolute;
+	top: 0;
+	right: 0;
+	border: none;
+	text-align: center;
+	width: 24px;
+	height: 24px;
+	font: 16px/24px Tahoma, Verdana, sans-serif;
+	color: #757575;
+	text-decoration: none;
+	background: transparent;
+	}
+.leaflet-container a.leaflet-popup-close-button:hover,
+.leaflet-container a.leaflet-popup-close-button:focus {
+	color: #585858;
+	}
+.leaflet-popup-scrolled {
+	overflow: auto;
+	}
+
+.leaflet-oldie .leaflet-popup-content-wrapper {
+	-ms-zoom: 1;
+	}
+.leaflet-oldie .leaflet-popup-tip {
+	width: 24px;
+	margin: 0 auto;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678)";
+	filter: progid:DXImageTransform.Microsoft.Matrix(M11=0.70710678, M12=0.70710678, M21=-0.70710678, M22=0.70710678);
+	}
+
+.leaflet-oldie .leaflet-control-zoom,
+.leaflet-oldie .leaflet-control-layers,
+.leaflet-oldie .leaflet-popup-content-wrapper,
+.leaflet-oldie .leaflet-popup-tip {
+	border: 1px solid #999;
+	}
+
+
+/* div icon */
+
+.leaflet-div-icon {
+	background: #fff;
+	border: 1px solid #666;
+	}
+
+
+/* Tooltip */
+/* Base styles for the element that has a tooltip */
+.leaflet-tooltip {
+	position: absolute;
+	padding: 6px;
+	background-color: #fff;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	color: #222;
+	white-space: nowrap;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	pointer-events: none;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+	}
+.leaflet-tooltip.leaflet-interactive {
+	cursor: pointer;
+	pointer-events: auto;
+	}
+.leaflet-tooltip-top:before,
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	position: absolute;
+	pointer-events: none;
+	border: 6px solid transparent;
+	background: transparent;
+	content: "";
+	}
+
+/* Directions */
+
+.leaflet-tooltip-bottom {
+	margin-top: 6px;
+}
+.leaflet-tooltip-top {
+	margin-top: -6px;
+}
+.leaflet-tooltip-bottom:before,
+.leaflet-tooltip-top:before {
+	left: 50%;
+	margin-left: -6px;
+	}
+.leaflet-tooltip-top:before {
+	bottom: 0;
+	margin-bottom: -12px;
+	border-top-color: #fff;
+	}
+.leaflet-tooltip-bottom:before {
+	top: 0;
+	margin-top: -12px;
+	margin-left: -6px;
+	border-bottom-color: #fff;
+	}
+.leaflet-tooltip-left {
+	margin-left: -6px;
+}
+.leaflet-tooltip-right {
+	margin-left: 6px;
+}
+.leaflet-tooltip-left:before,
+.leaflet-tooltip-right:before {
+	top: 50%;
+	margin-top: -6px;
+	}
+.leaflet-tooltip-left:before {
+	right: 0;
+	margin-right: -12px;
+	border-left-color: #fff;
+	}
+.leaflet-tooltip-right:before {
+	left: 0;
+	margin-left: -12px;
+	border-right-color: #fff;
+	}
+
+/* Printing */
+
+@media print {
+	/* Prevent printers from removing background-images of controls. */
+	.leaflet-control {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+		}
+	}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<style>
+:root{
+  --bg:#EEF1EA; --surface:#FBFCF9; --ink:#18261E; --muted:#5A685F;
+  --pine:#24493A; --pine-ink:#F3F6F1; --ochre:#C77F0A; --route:#2E6CB0;
+  --line:#D3DBD1; --danger:#A33A2B; --shadow:0 -6px 24px rgba(20,40,30,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root{
+    --bg:#121915; --surface:#1B241F; --ink:#E6ECE5; --muted:#97A59B;
+    --pine:#8CC2A6; --pine-ink:#0F1A14; --ochre:#EBA73A; --route:#73AAEA;
+    --line:#2C3832; --danger:#E27A6A; --shadow:0 -6px 24px rgba(0,0,0,.5);
+    color-scheme:dark;
+  }
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.4 "Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent;overflow:hidden}
+#map{position:fixed;inset:0;background:var(--bg)}
+.cond{font-family:"Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif}
+
+.brand{position:fixed;z-index:500;left:12px;top:calc(env(safe-area-inset-top,0px) + 10px);
+  background:var(--pine);color:var(--pine-ink);padding:6px 14px 7px;border-radius:999px;
+  font:700 19px/1 "Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;letter-spacing:.01em;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.leaflet-top{top:env(safe-area-inset-top,0px)}
+.leaflet-control-layers{border-radius:12px!important}
+.fab{position:fixed;z-index:500;right:12px;width:48px;height:48px;border-radius:50%;border:0;
+  background:var(--surface);color:var(--ink);box-shadow:0 2px 10px rgba(0,0,0,.25);display:grid;place-items:center;cursor:pointer}
+.fab svg{width:24px;height:24px}
+
+.sheet{position:fixed;z-index:600;left:0;right:0;bottom:0;background:var(--surface);color:var(--ink);
+  border-radius:20px 20px 0 0;box-shadow:var(--shadow);
+  padding:10px 16px calc(14px + env(safe-area-inset-bottom,0px));max-height:62vh;overflow-y:auto;
+  max-width:640px;margin:0 auto}
+.grip{width:38px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 10px}
+.title{font:700 24px/1.15 "Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;margin:0 0 4px;overflow-wrap:anywhere}
+.lead{color:var(--muted);margin:0 0 14px}
+.stats{display:flex;flex-wrap:wrap;gap:6px 24px;margin:6px 0 14px}
+.stat b{display:block;font:700 34px/1 "Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;font-variant-numeric:tabular-nums}
+.stat span{font-size:14px;color:var(--muted)}
+.stat.sm b{font-size:24px}
+.plan{border-top:1px solid var(--line);padding-top:12px;margin-bottom:12px}
+.plan .stats{margin-bottom:6px}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+label.chk{display:flex;gap:8px;align-items:center;font-size:15px}
+label.chk input{width:20px;height:20px;accent-color:var(--pine)}
+select,input[type=search]{font:inherit;font-size:16px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 10px;min-height:44px}
+select{flex:1;min-width:150px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn{font:600 16px/1.2 "Barlow",system-ui,sans-serif;min-height:48px;border-radius:12px;padding:10px 12px;cursor:pointer;
+  border:1.5px solid var(--line);background:transparent;color:var(--ink)}
+.btn.primary{background:var(--pine);border-color:var(--pine);color:var(--pine-ink)}
+.btn.wide{grid-column:1/-1}
+.btn:disabled{opacity:.5}
+.btn:focus-visible,.fab:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--ochre);outline-offset:2px}
+.linkbtn{background:none;border:0;color:var(--route);font:inherit;font-size:15px;padding:6px 0;cursor:pointer;text-decoration:underline}
+
+.toast{position:fixed;z-index:900;left:12px;right:12px;top:calc(env(safe-area-inset-top,0px) + 60px);max-width:520px;margin:0 auto;
+  background:var(--ink);color:var(--surface);padding:12px 14px;border-radius:12px;font-size:15px;box-shadow:0 4px 18px rgba(0,0,0,.3)}
+.toast.err{background:var(--danger);color:#fff}
+.busy::after{content:"";display:inline-block;width:14px;height:14px;margin-left:8px;vertical-align:-2px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.busy::after{animation:none}}
+
+dialog{border:0;padding:0;background:var(--surface);color:var(--ink);width:min(560px,100%);max-height:88vh;border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+dialog::backdrop{background:rgba(10,20,15,.45)}
+.dlg{padding:16px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.dlg h2{font:700 22px/1.2 "Barlow Semi Condensed","Arial Narrow",system-ui,sans-serif;margin:0 0 10px}
+.dlg h3{font:600 16px/1.2 "Barlow",system-ui,sans-serif;margin:18px 0 8px}
+.dlghead{display:flex;justify-content:space-between;align-items:center}
+.close{background:none;border:0;color:var(--muted);font-size:28px;line-height:1;width:44px;height:44px;cursor:pointer}
+.search{display:flex;gap:8px}
+.search input{flex:1;min-width:0}
+.hint{font-size:14px;color:var(--muted);margin:8px 0 0}
+ul.lib{list-style:none;margin:0;padding:0}
+ul.lib li{display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--line);padding:10px 0}
+ul.lib .meta{flex:1;min-width:0;cursor:pointer}
+ul.lib .meta b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+ul.lib .meta span{font-size:14px;color:var(--muted)}
+ul.lib .del{background:none;border:0;color:var(--danger);font:inherit;font-size:14px;min-height:44px;padding:0 6px;cursor:pointer}
+.emptylib{color:var(--muted);padding:8px 0}
+</style>
+</head>
+<body>
+<div id="map" role="application" aria-label="Kaart"></div>
+<div class="brand">Spoorvinder</div>
+<button class="fab" id="locBtn" aria-label="Toon mijn locatie">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+</button>
+
+<section class="sheet" id="sheet" aria-live="polite">
+  <div class="grip"></div>
+
+  <div id="emptyView">
+    <h1 class="title">Open een GPX om te beginnen</h1>
+    <p class="lead">Kies een track uit Bestanden, of zoek er een op mtbroutes.nl. Geopende tracks blijven bewaard op je iPhone.</p>
+    <div class="actions">
+      <button class="btn primary wide" data-act="open">GPX openen</button>
+      <button class="btn" data-act="lib">Mijn tracks</button>
+      <button class="btn" data-act="find">Zoek routes</button>
+    </div>
+  </div>
+
+  <div id="trackView" hidden>
+    <h1 class="title" id="tName"></h1>
+    <div class="stats">
+      <div class="stat"><b id="tDist">–</b><span>km track</span></div>
+      <div class="stat" id="tUpWrap"><b id="tUp">–</b><span>hoogtemeters</span></div>
+    </div>
+
+    <div class="plan" id="planView" hidden>
+      <div class="stats">
+        <div class="stat sm"><b id="pTo">–</b><span>km naar start</span></div>
+        <div class="stat sm" id="pBackWrap"><b id="pBack">–</b><span>km terug</span></div>
+        <div class="stat sm"><b id="pTot">–</b><span>km totaal</span></div>
+      </div>
+      <button class="linkbtn" data-act="clearplan">Aanloop weghalen</button>
+    </div>
+
+    <div class="row">
+      <label class="chk"><input type="checkbox" id="optBack" checked> Ook terug naar m’n startplek</label>
+    </div>
+    <div class="row">
+      <select id="optProfile" aria-label="Soort aanloop">
+        <option value="trekking">Aanloop via rustige wegen en fietspaden</option>
+        <option value="fastbike">Aanloop zo snel mogelijk (asfalt)</option>
+        <option value="shortest">Aanloop zo kort mogelijk</option>
+      </select>
+    </div>
+    <div class="actions">
+      <button class="btn primary wide" data-act="plan" id="planBtn">Route vanaf hier naar de start</button>
+      <button class="btn primary wide" data-act="share" id="shareBtn">Deel GPX</button>
+      <button class="btn" data-act="open">GPX openen</button>
+      <button class="btn" data-act="lib">Mijn tracks</button>
+    </div>
+  </div>
+</section>
+
+<dialog id="libDlg">
+  <div class="dlg">
+    <div class="dlghead"><h2>Mijn tracks</h2><button class="close" data-act="closelib" aria-label="Sluiten">×</button></div>
+    <h3>Nieuwe route zoeken</h3>
+    <div class="search">
+      <input type="search" id="q" placeholder="Plaats of bos, bv. Veluwe" enterkeyhint="search" aria-label="Plaats of bos">
+      <button class="btn primary" data-act="search">Zoek</button>
+    </div>
+    <button class="linkbtn" data-act="nearme">Gebruik mijn huidige plaats</button>
+    <p class="hint">Zoekt op mtbroutes.nl in Safari. Download daar de GPX, kom terug en tik op GPX openen.</p>
+    <h3>Opgeslagen op deze iPhone</h3>
+    <ul class="lib" id="libList"></ul>
+  </div>
+</dialog>
+
+<input type="file" id="fileIn" hidden>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s);
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const nf1=new Intl.NumberFormat('nl-NL',{minimumFractionDigits:1,maximumFractionDigits:1});
+const nf0=new Intl.NumberFormat('nl-NL',{maximumFractionDigits:0});
+const km=m=>nf1.format(m/1000);
+
+let toastT;
+function toast(msg,err){const t=$('#toast');t.textContent=msg;t.classList.toggle('err',!!err);t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,err?7000:3200)}
+
+/* ---------- opslag (IndexedDB) ---------- */
+let dbP=null;
+function db(){ if(!dbP) dbP=new Promise((res,rej)=>{const r=indexedDB.open('spoorvinder',1);r.onupgradeneeded=()=>r.result.createObjectStore('tracks',{keyPath:'id'});r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)}); return dbP }
+async function store(mode,fn){const d=await db();return new Promise((res,rej)=>{const t=d.transaction('tracks',mode);const req=fn(t.objectStore('tracks'));t.oncomplete=()=>res(req&&req.result);t.onerror=()=>rej(t.error)})}
+const dbAll=()=>store('readonly',s=>s.getAll());
+const dbGet=id=>store('readonly',s=>s.get(id));
+const dbPut=o=>store('readwrite',s=>s.put(o));
+const dbDel=id=>store('readwrite',s=>s.delete(id));
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+function setLast(id){try{localStorage.setItem('sv-last',id)}catch(e){}}
+function getLast(){try{return localStorage.getItem('sv-last')}catch(e){return null}}
+
+/* ---------- kaart ---------- */
+const map=L.map('map',{zoomControl:false}).setView([52.15,5.4],8);
+const topo=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{subdomains:'abc',maxZoom:17,attribution:'© OpenStreetMap, SRTM | © OpenTopoMap'});
+const osm=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'});
+topo.addTo(map);
+L.control.layers({'Topo met hoogtelijnen':topo,'Standaard':osm},null,{position:'topright'}).addTo(map);
+const lyr=L.layerGroup().addTo(map), planLyr=L.layerGroup().addTo(map);
+let hereMk=null;
+
+function placeFab(){const s=$('#sheet');$('#locBtn').style.bottom=(s.offsetHeight+12)+'px'}
+function fit(latlngs){if(!latlngs.length)return;const s=$('#sheet');map.fitBounds(L.latLngBounds(latlngs),{paddingTopLeft:[24,70],paddingBottomRight:[24,s.offsetHeight+24]})}
+
+/* ---------- state ---------- */
+const state={track:null,here:null,to:null,back:null};
+
+/* ---------- geo ---------- */
+function hav(a,b){const R=6371000,r=Math.PI/180,dLa=(b[0]-a[0])*r,dLo=(b[1]-a[1])*r;const x=Math.sin(dLa/2)**2+Math.cos(a[0]*r)*Math.cos(b[0]*r)*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
+function stats(pts){let d=0,up=0,last=null,hasE=false;for(let i=0;i<pts.length;i++){if(i)d+=hav(pts[i-1],pts[i]);const e=pts[i][2];if(e!=null&&!isNaN(e)){hasE=true;if(last==null)last=e;else if(e-last>3){up+=e-last;last=e}else if(last-e>3)last=e}}return{d,up,hasE}}
+
+function locate(){return new Promise((res,rej)=>{
+  if(!navigator.geolocation)return rej(new Error('Locatie wordt niet ondersteund in deze browser.'));
+  navigator.geolocation.getCurrentPosition(p=>{
+    state.here=[p.coords.latitude,p.coords.longitude];
+    if(hereMk)hereMk.setLatLng(state.here);
+    else hereMk=L.circleMarker(state.here,{radius:8,color:'#fff',weight:3,fillColor:css('--route'),fillOpacity:1}).addTo(map).bindTooltip('Jij');
+    res(state.here)
+  },e=>rej(new Error(e.code===1?'Geen toegang tot je locatie. Zet het aan via Instellingen › Privacy › Locatievoorzieningen › Safari-websites.':'Je locatie is niet gevonden. Probeer het opnieuw, liefst buiten.')),
+  {enableHighAccuracy:true,timeout:15000,maximumAge:30000})})}
+
+/* ---------- GPX lezen ---------- */
+function parseGpx(text,fallbackName){
+  const doc=new DOMParser().parseFromString(text,'application/xml');
+  if(doc.getElementsByTagName('parsererror').length)throw new Error('Dit bestand is geen geldige GPX.');
+  const by=n=>Array.from(doc.getElementsByTagNameNS('*',n));
+  let pts=by('trkpt');if(!pts.length)pts=by('rtept');
+  if(pts.length<2)throw new Error('Er staat geen track of route in dit GPX-bestand.');
+  const points=pts.map(p=>{const e=p.getElementsByTagNameNS('*','ele')[0];return[parseFloat(p.getAttribute('lat')),parseFloat(p.getAttribute('lon')),e?parseFloat(e.textContent):null]}).filter(p=>isFinite(p[0])&&isFinite(p[1]));
+  let name='';
+  for(const n of by('name')){const par=n.parentNode&&n.parentNode.localName;if(par==='metadata'||par==='trk'||par==='rte'){name=n.textContent.trim();if(name)break}}
+  return{name:name||fallbackName||'Naamloze track',points};
+}
+function idFor(t){const p=t.points[0],q=t.points[t.points.length-1];return [t.points.length,p[0].toFixed(5),p[1].toFixed(5),q[0].toFixed(5),q[1].toFixed(5)].join('_')}
+
+/* ---------- GPX maken ---------- */
+const esc=s=>String(s).replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'}[c]));
+function buildGpx(name,pts){
+  const rows=pts.map(p=>'<trkpt lat="'+p[0].toFixed(7)+'" lon="'+p[1].toFixed(7)+'">'+(p[2]!=null&&isFinite(p[2])?'<ele>'+(+p[2]).toFixed(1)+'</ele>':'')+'</trkpt>').join('\n');
+  return '<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="Spoorvinder" xmlns="http://www.topografix.com/GPX/1/1">\n<metadata><name>'+esc(name)+'</name><time>'+new Date().toISOString()+'</time></metadata>\n<trk><name>'+esc(name)+'</name><trkseg>\n'+rows+'\n</trkseg></trk>\n</gpx>\n';
+}
+function join(...segs){const out=[];for(const s of segs){if(!s)continue;for(const p of s){const l=out[out.length-1];if(l&&Math.abs(l[0]-p[0])<1e-7&&Math.abs(l[1]-p[1])<1e-7)continue;out.push(p)}}return out}
+const fileName=n=>(n.replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,' ').trim().slice(0,50)||'route')+'.gpx';
+
+/* ---------- routeren ---------- */
+async function leg(a,b,profile){
+  if(hav(a,b)<40)return[[a[0],a[1],null],[b[0],b[1],b[2]??null]];
+  try{
+    const u='https://brouter.de/brouter?lonlats='+a[1].toFixed(6)+','+a[0].toFixed(6)+'%7C'+b[1].toFixed(6)+','+b[0].toFixed(6)+'&profile='+profile+'&alternativeidx=0&format=geojson';
+    const r=await fetch(u);if(!r.ok)throw new Error(await r.text());
+    const j=await r.json();return j.features[0].geometry.coordinates.map(c=>[c[1],c[0],c.length>2?c[2]:null]);
+  }catch(e){
+    const u='https://routing.openstreetmap.de/routed-bike/route/v1/driving/'+a[1]+','+a[0]+';'+b[1]+','+b[0]+'?overview=full&geometries=geojson';
+    const r=await fetch(u);const j=r.ok?await r.json():null;
+    if(!j||j.code!=='Ok'||!j.routes||!j.routes.length)throw new Error('Er is geen fietsroute gevonden tussen jouw plek en de track.');
+    return j.routes[0].geometry.coordinates.map(c=>[c[1],c[0],null]);
+  }
+}
+
+/* ---------- weergave ---------- */
+function showTrack(t){
+  state.track=t;clearPlan(true);lyr.clearLayers();
+  const ll=t.points.map(p=>[p[0],p[1]]);
+  L.polyline(ll,{color:'#fff',weight:8,opacity:.85}).addTo(lyr);
+  L.polyline(ll,{color:css('--ochre'),weight:5}).addTo(lyr);
+  L.circleMarker(ll[0],{radius:9,color:'#fff',weight:3,fillColor:css('--pine'),fillOpacity:1}).addTo(lyr).bindTooltip('Start');
+  const end=ll[ll.length-1];
+  if(hav(ll[0],end)>60)L.circleMarker(end,{radius:7,color:'#fff',weight:3,fillColor:css('--danger'),fillOpacity:1}).addTo(lyr).bindTooltip('Finish');
+  const s=stats(t.points);
+  $('#tName').textContent=t.name;$('#tDist').textContent=km(s.d);
+  $('#tUpWrap').hidden=!s.hasE;$('#tUp').textContent=nf0.format(s.up);
+  $('#emptyView').hidden=true;$('#trackView').hidden=false;
+  requestAnimationFrame(()=>{placeFab();fit(ll)});
+}
+function clearPlan(silent){
+  state.to=state.back=null;planLyr.clearLayers();$('#planView').hidden=true;
+  $('#shareBtn').textContent='Deel GPX';$('#planBtn').textContent='Route vanaf hier naar de start';
+  if(!silent)requestAnimationFrame(placeFab);
+}
+function showPlan(){
+  planLyr.clearLayers();const rc=css('--route');
+  if(state.to)L.polyline(state.to.map(p=>[p[0],p[1]]),{color:rc,weight:5,dashArray:'2 9',lineCap:'round'}).addTo(planLyr);
+  if(state.back)L.polyline(state.back.map(p=>[p[0],p[1]]),{color:rc,weight:4,opacity:.6,dashArray:'1 8',lineCap:'round'}).addTo(planLyr);
+  const dTo=state.to?stats(state.to).d:0,dBack=state.back?stats(state.back).d:0,dT=stats(state.track.points).d;
+  $('#pTo').textContent=km(dTo);$('#pBackWrap').hidden=!state.back;$('#pBack').textContent=km(dBack);$('#pTot').textContent=km(dTo+dT+dBack);
+  $('#planView').hidden=false;$('#shareBtn').textContent='Deel route met aanloop';$('#planBtn').textContent='Aanloop opnieuw berekenen';
+  requestAnimationFrame(()=>{placeFab();fit(join(state.to,state.track.points,state.back).map(p=>[p[0],p[1]]))});
+}
+
+/* ---------- acties ---------- */
+async function openFile(f){
+  try{
+    const text=await f.text();const t=parseGpx(text,f.name.replace(/\.gpx$/i,''));
+    t.id=idFor(t);t.gpx=text;t.added=Date.now();t.dist=stats(t.points).d;
+    try{const old=await dbGet(t.id);if(old)t.added=old.added;await dbPut({id:t.id,name:t.name,gpx:text,added:t.added,dist:t.dist})}catch(e){toast('Track geopend, maar opslaan op deze iPhone lukte niet.',true)}
+    setLast(t.id);showTrack(t);
+  }catch(e){toast(e.message||'Dit bestand kon niet worden geopend.',true)}
+}
+async function plan(btn){
+  if(!state.track)return;
+  btn.disabled=true;btn.classList.add('busy');
+  try{
+    const here=await locate();const pts=state.track.points;const prof=$('#optProfile').value;
+    const tasks=[leg(here,pts[0],prof)];
+    if($('#optBack').checked)tasks.push(leg(pts[pts.length-1],[here[0],here[1],null],prof));
+    const [to,back]=await Promise.all(tasks);
+    state.to=to;state.back=back||null;
+    if(stats(to).d>80000)toast('Let op: de start ligt ver weg. Controleer de aanloop op de kaart.');
+    showPlan();
+  }catch(e){toast(e.message||'De route kon niet worden berekend.',true)}
+  finally{btn.disabled=false;btn.classList.remove('busy')}
+}
+async function share(){
+  const t=state.track;if(!t)return;
+  let name=t.name,xml;
+  if(state.to){name=t.name+(state.back?' (vanaf startplek, retour)':' (vanaf startplek)');xml=buildGpx(name,join(state.to,t.points,state.back))}
+  else xml=t.gpx||buildGpx(name,t.points);
+  const fn=fileName(name);
+  for(const type of ['application/gpx+xml','application/octet-stream']){
+    const file=new File([xml],fn,{type});
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      try{await navigator.share({files:[file],title:name});}catch(e){if(e.name!=='AbortError')toast('Delen lukte niet: '+e.message,true)}
+      return;
+    }
+  }
+  try{
+    const dl=window.claude&&await window.claude.use('downloads');
+    if(!dl){toast('Delen en downloaden zijn hier niet beschikbaar.',true);return}
+    await dl.save({filename:fn,data:xml});
+  }catch(e){if(e&&e.code!=='declined')toast('Downloaden lukte niet.',true)}
+}
+async function renderLib(){
+  const ul=$('#libList');ul.textContent='';
+  let all=[];try{all=await dbAll()}catch(e){}
+  all.sort((a,b)=>b.added-a.added);
+  if(!all.length){const li=document.createElement('li');li.className='emptylib';li.textContent='Nog geen tracks. Geopende GPX-bestanden komen hier vanzelf te staan.';ul.append(li);return}
+  for(const it of all){
+    const li=document.createElement('li');
+    const m=document.createElement('div');m.className='meta';m.tabIndex=0;m.setAttribute('role','button');
+    const b=document.createElement('b');b.textContent=it.name;
+    const s=document.createElement('span');s.textContent=km(it.dist)+' km, toegevoegd '+new Date(it.added).toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'});
+    m.append(b,s);
+    const open=()=>{const t=parseGpx(it.gpx,it.name);t.id=it.id;t.gpx=it.gpx;t.name=it.name;setLast(it.id);$('#libDlg').close();showTrack(t)};
+    m.onclick=open;m.onkeydown=e=>{if(e.key==='Enter')open()};
+    const d=document.createElement('button');d.className='del';d.textContent='Verwijder';
+    d.onclick=async()=>{if(!confirm('“'+it.name+'” verwijderen van deze iPhone?'))return;await dbDel(it.id);renderLib()};
+    li.append(m,d);ul.append(li);
+  }
+}
+function search(q){
+  q=(q||'').trim();
+  const url=q?'https://www.google.com/search?q='+encodeURIComponent('site:mtbroutes.nl '+q):'https://www.mtbroutes.nl/';
+  window.open(url,'_blank');
+}
+async function nearMe(btn){
+  btn.disabled=true;
+  try{
+    const h=await locate();
+    const r=await fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=10&accept-language=nl&lat='+h[0]+'&lon='+h[1]);
+    const j=await r.json();const a=j.address||{};
+    $('#q').value=a.city||a.town||a.village||a.municipality||a.county||'';
+    if(!$('#q').value)toast('Je plaats is niet gevonden. Typ hem zelf in.',true);
+  }catch(e){toast(e.message||'Je plaats is niet gevonden.',true)}
+  finally{btn.disabled=false}
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  switch(b.dataset.act){
+    case'open':$('#fileIn').value='';$('#fileIn').click();break;
+    case'lib':renderLib();$('#libDlg').showModal();break;
+    case'find':renderLib();$('#libDlg').showModal();setTimeout(()=>$('#q').focus(),50);break;
+    case'closelib':$('#libDlg').close();break;
+    case'plan':plan(b);break;
+    case'clearplan':clearPlan();if(state.track)fit(state.track.points.map(p=>[p[0],p[1]]));break;
+    case'share':share();break;
+    case'search':search($('#q').value);break;
+    case'nearme':nearMe(b);break;
+  }
+});
+$('#q').addEventListener('keydown',e=>{if(e.key==='Enter')search(e.target.value)});
+$('#fileIn').addEventListener('change',e=>{const f=e.target.files&&e.target.files[0];if(f)openFile(f)});
+$('#libDlg').addEventListener('click',e=>{if(e.target===e.currentTarget)e.currentTarget.close()});
+$('#locBtn').addEventListener('click',async()=>{try{const h=await locate();map.setView(h,Math.max(map.getZoom(),14))}catch(e){toast(e.message,true)}});
+window.addEventListener('resize',placeFab);
+
+/* ---------- start ---------- */
+placeFab();
+(async()=>{const id=getLast();if(!id)return;try{const it=await dbGet(id);if(it){const t=parseGpx(it.gpx,it.name);t.id=it.id;t.gpx=it.gpx;t.name=it.name;showTrack(t)}}catch(e){}})();
+})();
+</script>
+</body>
+</html>
