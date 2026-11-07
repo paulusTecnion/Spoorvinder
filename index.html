@@ -101,6 +101,9 @@ select{flex:1;min-width:150px}
   background:var(--ink);color:var(--surface);padding:12px 14px;border-radius:12px;font-size:15px;box-shadow:0 4px 18px rgba(0,0,0,.3)}
 .toast.err{background:var(--danger);color:#fff}
 .busy::after{content:"";display:inline-block;width:14px;height:14px;margin-left:8px;vertical-align:-2px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .8s linear infinite}
+/* richtingspijltjes */
+.arrow{pointer-events:none}
+.arrow svg{display:block;width:18px;height:18px;transform-origin:50% 50%}
 @keyframes spin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.busy::after{animation:none}}
 
@@ -252,7 +255,7 @@ const topo=L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{subdo
 const osm=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'});
 topo.addTo(map);
 L.control.layers({'Topo met hoogtelijnen':topo,'Standaard':osm},null,{position:'topright'}).addTo(map);
-const lyr=L.layerGroup().addTo(map), planLyr=L.layerGroup().addTo(map);
+const lyr=L.layerGroup().addTo(map), planLyr=L.layerGroup().addTo(map), arrowLyr=L.layerGroup().addTo(map);
 let hereMk=null;
 
 function placeFab(){const s=$('#sheet');$('#locBtn').style.bottom=(s.offsetHeight+12)+'px'}
@@ -313,6 +316,38 @@ async function leg(a,b,profile){
   }
 }
 
+/* ---------- richtingspijltjes ---------- */
+function arrowIcon(deg,color,outline){
+  return L.divIcon({className:'arrow',iconSize:[18,18],iconAnchor:[9,9],
+    html:'<svg viewBox="0 0 14 14" style="transform:rotate('+deg.toFixed(1)+'deg)">'+
+      (outline?'<path d="M4 2.5l6 4.5-6 4.5" fill="none" stroke="'+outline+'" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>':'')+
+      '<path d="M4 2.5l6 4.5-6 4.5" fill="none" stroke="'+color+'" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>'});
+}
+function addArrows(pts,color,outline,step){
+  if(!pts||pts.length<2)return;
+  const view=map.getBounds().pad(0.25);let need=step/2,count=0;
+  let a=map.latLngToLayerPoint([pts[0][0],pts[0][1]]);
+  for(let i=1;i<pts.length&&count<500;i++){
+    const b=map.latLngToLayerPoint([pts[i][0],pts[i][1]]);const seg=a.distanceTo(b);
+    if(seg>0){
+      let r=need;const deg=Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI;
+      while(r<=seg){const t=r/seg;const ll=map.layerPointToLatLng(L.point(a.x+(b.x-a.x)*t,a.y+(b.y-a.y)*t));
+        if(view.contains(ll)){L.marker(ll,{icon:arrowIcon(deg,color,outline),interactive:false,keyboard:false}).addTo(arrowLyr);count++}
+        r+=step}
+      need=r-seg;
+    }
+    a=b;
+  }
+}
+function drawArrows(){
+  arrowLyr.clearLayers();if(!state.track)return;
+  addArrows(state.track.points,'#fff',css('--ochre'),90);
+  const rc=css('--route');
+  if(state.to)addArrows(state.to,rc,'#fff',110);
+  if(state.back)addArrows(state.back,rc,'#fff',110);
+}
+map.on('moveend',drawArrows);
+
 /* ---------- weergave ---------- */
 function showTrack(t){
   state.track=t;clearPlan(true);lyr.clearLayers();
@@ -325,7 +360,7 @@ function showTrack(t){
   const s=stats(t.points);
   setHeader();
   $('#emptyView').hidden=true;$('#trackView').hidden=false;
-  setSheet(true);requestAnimationFrame(()=>{placeFab();fit(ll)});
+  setSheet(true);requestAnimationFrame(()=>{placeFab();fit(ll);drawArrows()});
 }
 function setHeader(){
   const t=state.track;
@@ -342,7 +377,7 @@ function setSheet(open){
 }
 function clearPlan(silent){
   state.to=state.back=null;planLyr.clearLayers();$('#planView').hidden=true;$('#planEmpty').hidden=false;$('#step2').classList.remove('done');
-  $('#shareBtn').textContent='Deel GPX';setHeader();
+  $('#shareBtn').textContent='Deel GPX';setHeader();drawArrows();
   if(!silent)requestAnimationFrame(placeFab);
 }
 function showPlan(){
@@ -352,7 +387,7 @@ function showPlan(){
   const dTo=state.to?stats(state.to).d:0,dBack=state.back?stats(state.back).d:0,dT=stats(state.track.points).d;
   $('#pTo').textContent=km(dTo);$('#pBackWrap').hidden=!state.back;$('#pBack').textContent=km(dBack);$('#pTot').textContent=km(dTo+dT+dBack);
   $('#planView').hidden=false;$('#planEmpty').hidden=true;$('#step2').classList.add('done');$('#shareBtn').textContent='Deel GPX met aanloop';setHeader();
-  requestAnimationFrame(()=>{placeFab();fit(join(state.to,state.track.points,state.back).map(p=>[p[0],p[1]]))});
+  requestAnimationFrame(()=>{placeFab();fit(join(state.to,state.track.points,state.back).map(p=>[p[0],p[1]]));drawArrows()});
 }
 
 /* ---------- acties ---------- */
