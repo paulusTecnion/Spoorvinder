@@ -157,6 +157,10 @@ ul.lib .del{background:none;border:0;color:var(--danger);font:inherit;font-size:
         <div class="num" aria-hidden="true">1</div>
         <div>
           <h2>Track geopend</h2>
+          <p id="fixInfo"></p>
+          <button class="btn primary full" data-act="fix" id="fixBtn" hidden>Track verbeteren</button>
+          <button class="linkbtn" data-act="unfix" id="unfixBtn" hidden>Terug naar het origineel</button>
+          <div style="height:10px"></div>
           <div class="mini">
             <button class="btn small" data-act="open">Andere GPX</button>
             <button class="btn small" data-act="lib">Mijn tracks</button>
@@ -349,6 +353,75 @@ function drawArrows(){
 map.on('moveend',drawArrows);
 
 /* ---------- weergave ---------- */
+/* ---------- track verbeteren: sprongen langs wegen en paden leggen ---------- */
+const GAP=100; // meter tussen twee punten waarboven een bocht gemist kan zijn
+function findGaps(pts){const g=[];for(let i=1;i<pts.length;i++)if(hav(pts[i-1],pts[i])>GAP)g.push(i);return g}
+function devFromLine(p,a,b){ // afstand van p tot lijnstuk a-b in meters
+  const r=Math.PI/180,k=Math.cos(a[0]*r)*6371000*r,m=6371000*r;
+  const bx=(b[1]-a[1])*k,by=(b[0]-a[0])*m,px=(p[1]-a[1])*k,py=(p[0]-a[0])*m;
+  const L2=bx*bx+by*by;let t=L2?(px*bx+py*by)/L2:0;t=Math.max(0,Math.min(1,t));
+  return Math.hypot(px-t*bx,py-t*by);
+}
+function plausible(route,a,b){
+  const straight=hav(a,b),len=stats(route).d;
+  if(len>straight*1.8+60)return false;           // grote omweg: dan is het pad waarschijnlijk niet bekend
+  let dev=0;for(const p of route)dev=Math.max(dev,devFromLine(p,a,b));
+  return dev<=straight*0.5+30;                     // niet een heel andere weg nemen
+}
+async function brouter(a,b,profile){
+  const u='https://brouter.de/brouter?lonlats='+a[1].toFixed(6)+','+a[0].toFixed(6)+'%7C'+b[1].toFixed(6)+','+b[0].toFixed(6)+'&profile='+profile+'&alternativeidx=0&format=geojson';
+  const r=await fetch(u);if(!r.ok)throw new Error('route');
+  const j=await r.json();return j.features[0].geometry.coordinates.map(c=>[c[1],c[0],c.length>2?c[2]:null]);
+}
+async function improve(btn){
+  const t=state.track;if(!t)return;
+  const pts=t.points,gaps=findGaps(pts);
+  if(!gaps.length)return;
+  if(gaps.length>300){toast('Deze track heeft te veel losse punten om te verbeteren ('+gaps.length+' sprongen).',true);return}
+  btn.disabled=true;btn.classList.add('busy');
+  const fixed=new Map(),queue=gaps.slice();let done=0;
+  const work=async()=>{while(queue.length){const i=queue.shift();const a=pts[i-1],b=pts[i];
+    for(const prof of ['trekking','hiking-mountain']){
+      try{const seg=await brouter(a,b,prof);if(plausible(seg,a,b)){fixed.set(i,seg);break}}catch(e){}
+    }
+    done++;btn.textContent='Bezig: '+done+' van '+gaps.length}};
+  try{
+    await Promise.all([work(),work()]);
+    if(!fixed.size){toast('Geen van de sprongen kon langs een bekend pad worden gelegd.',true);return}
+    const out=[pts[0]];
+    for(let i=1;i<pts.length;i++){
+      const seg=fixed.get(i);
+      if(seg)for(let k=1;k<seg.length-1;k++){const p=seg[k];out.push([p[0],p[1],p[2]!=null?p[2]:(pts[i][2]??null)])}
+      out.push(pts[i]);
+    }
+    const name=t.name.replace(/ \(verbeterd\)$/,'')+' (verbeterd)';
+    const nt={name,points:out,from:t.from||t.id,fix:{ok:fixed.size,total:gaps.length,rest:gaps.filter(i=>!fixed.has(i)).map(i=>[[pts[i-1][0],pts[i-1][1]],[pts[i][0],pts[i][1]]])}};
+    nt.id=idFor(nt);nt.gpx=buildGpx(name,out);
+    try{await dbPut({id:nt.id,name,gpx:nt.gpx,added:Date.now(),dist:stats(out).d,from:nt.from,fix:nt.fix})}catch(e){}
+    setLast(nt.id);showTrack(nt);
+  }finally{btn.disabled=false;btn.classList.remove('busy');btn.textContent='Track verbeteren'}
+}
+async function unfix(){
+  const t=state.track;if(!t||!t.from)return;
+  try{const it=await dbGet(t.from);if(!it){toast('Het origineel staat niet meer in Mijn tracks.',true);return}const o=fromItem(it);setLast(o.id);showTrack(o)}catch(e){toast('Het origineel kon niet worden geopend.',true)}
+}
+function updateFixUI(){
+  const t=state.track,info=$('#fixInfo'),fb=$('#fixBtn'),ub=$('#unfixBtn');
+  const gaps=findGaps(t.points).length;
+  ub.hidden=!t.from;
+  if(t.fix){
+    const rest=t.fix.total-t.fix.ok;
+    info.textContent=t.fix.ok+' van de '+t.fix.total+' sprongen lopen nu langs wegen en paden.'+(rest?' '+rest+' bleven recht (rood): daar is geen passend pad bekend op de kaart.':'');
+    fb.hidden=true;
+  }else if(gaps){
+    info.textContent=gaps+(gaps===1?' plek':' plekken')+' met een grote sprong tussen twee punten (rood gestippeld). Daar kan de track een bocht of kruising overslaan.';
+    fb.hidden=false;
+  }else{
+    info.textContent='Genoeg punten, geen grote sprongen gevonden.';fb.hidden=true;
+  }
+}
+function fromItem(it){const t=parseGpx(it.gpx,it.name);t.id=it.id;t.gpx=it.gpx;t.name=it.name;t.from=it.from;t.fix=it.fix;return t}
+
 function showTrack(t){
   state.track=t;clearPlan(true);lyr.clearLayers();
   const ll=t.points.map(p=>[p[0],p[1]]);
@@ -357,8 +430,10 @@ function showTrack(t){
   L.circleMarker(ll[0],{radius:9,color:'#fff',weight:3,fillColor:css('--pine'),fillOpacity:1}).addTo(lyr).bindTooltip('Start');
   const end=ll[ll.length-1];
   if(hav(ll[0],end)>60)L.circleMarker(end,{radius:7,color:'#fff',weight:3,fillColor:css('--danger'),fillOpacity:1}).addTo(lyr).bindTooltip('Finish');
-  const s=stats(t.points);
-  setHeader();
+  const gc=css('--danger');
+  const gapLines=t.fix?(t.fix.rest||[]):findGaps(t.points).map(i=>[ll[i-1],ll[i]]);
+  for(const g of gapLines)L.polyline(g,{color:gc,weight:5,dashArray:'3 8',lineCap:'round'}).addTo(lyr);
+  setHeader();updateFixUI();
   $('#emptyView').hidden=true;$('#trackView').hidden=false;
   setSheet(true);requestAnimationFrame(()=>{placeFab();fit(ll);drawArrows()});
 }
@@ -441,7 +516,7 @@ async function renderLib(){
     const b=document.createElement('b');b.textContent=it.name;
     const s=document.createElement('span');s.textContent=km(it.dist)+' km, toegevoegd '+new Date(it.added).toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'});
     m.append(b,s);
-    const open=()=>{const t=parseGpx(it.gpx,it.name);t.id=it.id;t.gpx=it.gpx;t.name=it.name;setLast(it.id);$('#libDlg').close();showTrack(t)};
+    const open=()=>{const t=fromItem(it);setLast(it.id);$('#libDlg').close();showTrack(t)};
     m.onclick=open;m.onkeydown=e=>{if(e.key==='Enter')open()};
     const d=document.createElement('button');d.className='del';d.textContent='Verwijder';
     d.onclick=async()=>{if(!confirm('“'+it.name+'” verwijderen van deze iPhone?'))return;await dbDel(it.id);renderLib()};
@@ -476,6 +551,8 @@ document.addEventListener('click',e=>{
     case'plan':plan(b);break;
     case'clearplan':clearPlan();if(state.track)fit(state.track.points.map(p=>[p[0],p[1]]));break;
     case'share':share();break;
+    case'fix':improve(b);break;
+    case'unfix':unfix();break;
     case'search':search($('#q').value);break;
     case'nearme':nearMe(b);break;
   }
@@ -497,7 +574,7 @@ window.addEventListener('resize',placeFab);
 
 /* ---------- start ---------- */
 placeFab();
-(async()=>{const id=getLast();if(!id)return;try{const it=await dbGet(id);if(it){const t=parseGpx(it.gpx,it.name);t.id=it.id;t.gpx=it.gpx;t.name=it.name;showTrack(t)}}catch(e){}})();
+(async()=>{const id=getLast();if(!id)return;try{const it=await dbGet(id);if(it)showTrack(fromItem(it))}catch(e){}})();
 })();
 </script>
 </body>
